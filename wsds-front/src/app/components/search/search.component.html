@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+      <div class="col-md-8">
+          <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="searchTerm" (keyup)="onSearch()">
+              <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Buscar</button>
+              </div>
+          </div>
+          <div *ngIf="results && results.length" class="card">
+              <ul class="list-group list-group-flush">
+                  <li class="list-group-item" *ngFor="let item of results">
+                      <h5 class="card-title">{{ item.title }}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{ item.source }}</h6>
+                      <p class="card-text">{{ item.text }}</p>
+                      <span class="badge badge-primary">{{ item.tag }}</span>
+                  </li>
+              </ul>
+          </div>
+          <p *ngIf="results && !results.length" class="text-muted">No se encontraron resultados.</p>
+      </div>
+  </div>
+</div>
