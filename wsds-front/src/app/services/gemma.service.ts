@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GemmaService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://127.0.0.1:8000';
+  // http://127.0.0.1:8000/global
+  //http://localhost:3000
 
   constructor(private http: HttpClient) { }
 
@@ -14,6 +16,7 @@ export class GemmaService {
     // const params = new HttpParams().set('/', query);
     // return this.http.get(this.apiUrl, { params });
     const urlWithQuery = `${this.apiUrl}/${query}`;
+    //                                  /${query}
     return this.http.get(urlWithQuery);
   }
 }

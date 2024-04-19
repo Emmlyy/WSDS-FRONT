@@ -16,6 +16,7 @@ export class SearchComponent {
     if (this.searchTerm.trim()) {
       this.gemmaService.searchData(this.searchTerm.trim()).subscribe(
         data => {
+          console.log(data)
           if (Array.isArray(data)) {
             this.results = data;
           } else if (data && typeof data === 'object') {

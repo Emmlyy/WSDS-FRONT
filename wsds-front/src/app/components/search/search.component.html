@@ -1,23 +1,29 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-      <div class="col-md-8">
+    <div class="col-md">
+      <h2>FILTROS</h2>
+    </div>
+    <div class="col-lg-10">
           <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="searchTerm" (keyup)="onSearch()">
               <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Buscar</button>
               </div>
           </div>
-          <div *ngIf="results && results.length" class="card">
-              <ul class="list-group list-group-flush">
-                  <li class="list-group-item" *ngFor="let item of results">
-                      <h5 class="card-title">{{ item.title }}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">{{ item.source }}</h6>
-                      <p class="card-text">{{ item.text }}</p>
+          <div *ngIf="results && results.length" class="">
+              <div class="card bg-light border-info mb-3" *ngFor="let item of results">
+                  <div class="card-header">
+                    <h3 class="card-title text-info">{{ item.title }}</h3>
+                  </div>
+                  <div class=" card-body " >
+                      <h5 class="card-subtitle mb-2 text-muted">{{ item.source }}</h5>
+                      <p class="card-text text-justify">{{ item.text }}</p>
                       <span class="badge badge-primary">{{ item.tag }}</span>
-                  </li>
-              </ul>
+                  </div>
+              </div>
           </div>
           <p *ngIf="results && !results.length" class="text-muted">No se encontraron resultados.</p>
-      </div>
+    </div>
+
   </div>
 </div>
