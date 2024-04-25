@@ -49,6 +49,7 @@ export class SearchComponent implements OnInit {
     "Estado del agresor/a después del hecho",
     "Homicidios sin contextos"
   ];
+  panelOpenState: boolean = false;
 
   constructor(private gemmaService: GemmaService) { }
   ngOnInit(){

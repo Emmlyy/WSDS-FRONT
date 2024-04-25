@@ -42,13 +42,24 @@
           </mat-autocomplete>
         </mat-form-field>
       </div>
-      <mat-slide-toggle class="pb-3 "> <div class="d-flex align-items-center">Opciones Avanzadas</div></mat-slide-toggle>
-      <div class="form-field-container">
-        <mat-form-field class="adv-filter" *ngFor="let case_ of indicators" appearance="outline">
-          <mat-label>{{ case_ }}</mat-label>
-          <input matInput placeholder="Placeholder">
-        </mat-form-field>
-      </div>
+
+      <mat-accordion>
+        <mat-expansion-panel class="box-shadow-none" (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="justify-content-end">
+              <mat-slide-toggle [checked]="panelOpenState"> <div class="d-flex align-items-center">Opciones Avanzadas</div></mat-slide-toggle>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="form-field-container">
+            <mat-form-field class="adv-filter" *ngFor="let case_ of indicators" appearance="outline">
+              <mat-label>{{ case_ }}</mat-label>
+              <input matInput placeholder="Placeholder">
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
       <button class="search-btn" mat-flat-button color="primary">BUSCAR</button>
     </form>
   </header>

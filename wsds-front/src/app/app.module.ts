@@ -24,6 +24,13 @@ import {
 } from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {
+  MatAccordion,
+  MatExpansionModule,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -53,7 +60,12 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     MatDatepickerModule,
     MatNativeDateModule,
     MatDateRangePicker,
-    MatSlideToggle
+    MatSlideToggle,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionModule,
+    MatExpansionPanelTitle,
+    MatExpansionPanelHeader,
   ],
   providers: [
     provideClientHydration(),
