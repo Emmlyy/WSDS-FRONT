@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
 import { BannerComponent } from './components/Banner/banner.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -31,6 +31,8 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule} from "@angular/material/card";
+import {HttpConfigInterceptor} from "./interceptor/http-config.interceptor";
 
 @NgModule({
   declarations: [
@@ -66,11 +68,17 @@ import {
     MatExpansionModule,
     MatExpansionPanelTitle,
     MatExpansionPanelHeader,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardActions,
+    MatCardModule
   ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
-    MatDatepickerModule
+    MatDatepickerModule,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

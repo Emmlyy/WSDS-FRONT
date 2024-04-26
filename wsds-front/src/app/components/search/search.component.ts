@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {GemmaService} from '../../services/gemma.service';
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
-
+import global from "./../../mocks/global"
 interface OnInit {
 }
 
@@ -12,8 +12,7 @@ interface OnInit {
   styleUrl: './search.component.scss'
 })
 export class SearchComponent implements OnInit {
-  searchTerm: string = '';
-  myControl = new FormControl('');
+  searchControl = new FormControl('');
   townsControl = new FormControl('')
   departmentsControl = new FormControl('');
   results: any[] = [];
@@ -50,10 +49,15 @@ export class SearchComponent implements OnInit {
     "Homicidios sin contextos"
   ];
   panelOpenState: boolean = false;
-
+  iconMapper = new Map([
+    ['diario.elmundo.sv', './../../assets/elmundo.png'],
+    ['diariocolatino.com', './../../assets/colatino.png'],
+    ['diarioelsalvador.com', './../../assets/elsalvador.png'],
+  ])
+  news: {title: string, text: string, source: string, tag:string}[] | null | undefined = null;
   constructor(private gemmaService: GemmaService) { }
   ngOnInit(){
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
@@ -67,18 +71,11 @@ export class SearchComponent implements OnInit {
     })
   }
   onSearch(): void {
-    if (this.searchTerm.trim()) {
-      this.gemmaService.searchData(this.searchTerm.trim()).subscribe(
+    console.log(this.searchControl.value)
+    if (this.searchControl.value) {
+      this.gemmaService.searchData(this.searchControl.value).subscribe(
         data => {
-          console.log(data)
-          if (Array.isArray(data)) {
-            this.results = data;
-          } else if (data && typeof data === 'object') {
-            this.results = [data];
-            console.log(this.results)
-          } else {
-            this.results = [];
-          }
+          this.news = data
         },
         error => {
           console.error('Error al obtener datos:', error);

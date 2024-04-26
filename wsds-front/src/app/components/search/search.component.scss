@@ -33,3 +33,16 @@ mat-accordion ::ng-deep{
     padding: 0;
   }
 }
+.cards-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.new-card{
+  flex: 0 1 32%;
+  box-sizing: border-box;
+}
+
+mat-card{
+  height: 210px;
+}
