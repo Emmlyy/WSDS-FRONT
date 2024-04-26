@@ -11,6 +11,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { ButtonReportComponent,FichaContentDialog, DialogContent } from './components/Ficha/ficha.component'; // Asegúrate de importar correctamente el componente ButtonComponent
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
@@ -40,7 +41,9 @@ import {HttpConfigInterceptor} from "./interceptor/http-config.interceptor";
     SearchComponent,
     BannerComponent,
     NavBarComponent,
-    LayoutComponent
+    LayoutComponent,
+    ButtonReportComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,9 @@ import {HttpConfigInterceptor} from "./interceptor/http-config.interceptor";
     MatCardHeader,
     MatCardContent,
     MatCardActions,
-    MatCardModule
+    MatCardModule,
+    DialogContent,
+    FichaContentDialog,
   ],
   providers: [
     provideClientHydration(),

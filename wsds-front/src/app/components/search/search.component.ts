@@ -2,6 +2,10 @@ import {Component} from '@angular/core';
 import {GemmaService} from '../../services/gemma.service';
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+
+
 import global from "./../../mocks/global"
 interface OnInit {
 }
@@ -9,9 +13,11 @@ interface OnInit {
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrl: './search.component.scss'
+  styleUrl: './search.component.scss',
+  //YourDialog: '../Ficha/ficha.component.html'
 })
 export class SearchComponent implements OnInit {
+
   searchControl = new FormControl('');
   townsControl = new FormControl('')
   departmentsControl = new FormControl('');
@@ -55,6 +61,7 @@ export class SearchComponent implements OnInit {
     ['diarioelsalvador.com', './../../assets/elsalvador.png'],
   ])
   news: {title: string, text: string, source: string, tag:string}[] | null | undefined = null;
+
   constructor(private gemmaService: GemmaService) { }
   ngOnInit(){
     this.filteredOptions = this.searchControl.valueChanges.pipe(
@@ -69,6 +76,7 @@ export class SearchComponent implements OnInit {
       this.currentDepartment = this.departments.find(obj => obj.name == value)
       console.log(this.currentDepartment)
     })
+
   }
   onSearch(): void {
     console.log(this.searchControl.value)
@@ -101,4 +109,28 @@ export class SearchComponent implements OnInit {
   changeDepartments($event: Event) {
     console.log(this.departmentsControl.value)
   }
+
+
+
 }
+
+/*
+@Component({
+  selector: '../Ficha/ficha.component',
+  templateUrl: '../Ficha/ficha.component.html',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule],
+})
+export class FichaComponent {
+
+  constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogRef = this.dialog.open(FichaComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+}*/
