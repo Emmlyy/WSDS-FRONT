@@ -1,6 +1,7 @@
 import {Component, Input } from '@angular/core';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 
 
 /**
@@ -10,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
   selector: 'dialog-content-news',
   templateUrl: './dialog-content.html',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule],
+  imports: [MatButtonModule, MatDialogModule, MatCardModule],
 })
 export class DialogContentNews {
   constructor(public dialog: MatDialog) {}
@@ -28,7 +29,7 @@ export class DialogContentNews {
   selector: 'dialog-content-news',
   templateUrl: './news-content-dialog.html',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule],
+  imports: [MatDialogModule, MatButtonModule, MatCardModule],
 })
 export class NewsContentDialog {}
 

@@ -1,6 +1,6 @@
 {
   "response": {
-    "classification": "La noticia describe un homicidio, ya que contiene las palabras clave \"homicidio\" y \"feminicidio\".",
+    "Descripcion": "La noticia describe un homicidio, ya que contiene las palabras clave \"homicidio\" y \"feminicidio\".",
     "information_extraction": {
       "classification": "Homicidio",
       "title": "Detienen a sujeto por golpear e intentar matar a su pareja con un cuchillo",

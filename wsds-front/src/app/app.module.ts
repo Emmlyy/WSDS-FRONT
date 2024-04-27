@@ -11,13 +11,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import { ButtonReportComponent,FichaContentDialog, DialogContentFicha } from './components/Ficha/ficha.component';
+import { ButtonReportComponent,FichaContentDialog, DialogContentFicha, NewsDetailsComponent } from './components/Ficha/ficha.component';
 import { ButtonReadComponent,NewsContentDialog, DialogContentNews } from './components/News/news.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
+
 import {
   MatDatepickerModule,
   MatDatepickerToggle,
@@ -45,7 +46,7 @@ import {HttpConfigInterceptor} from "./interceptor/http-config.interceptor";
     LayoutComponent,
     ButtonReportComponent,
     ButtonReadComponent,
-
+    NewsDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +83,7 @@ import {HttpConfigInterceptor} from "./interceptor/http-config.interceptor";
     FichaContentDialog,
     DialogContentNews,
     NewsContentDialog,
+
   ],
   providers: [
     provideClientHydration(),
