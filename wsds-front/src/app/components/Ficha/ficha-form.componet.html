@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col">
-              <mat-form-field appearance="fill" class="form-field m-1">
+              <mat-form-field  class="form-field full-width m-1">
                 <mat-label>Clasificación</mat-label>
                 <input
                   matInput
@@ -29,7 +29,9 @@
                   class="input-field"
                 />
               </mat-form-field>
-              <mat-form-field appearance="fill" class="form-field m-1">
+            </div>
+            <div class="col">
+              <mat-form-field  class="form-field full-width m-1">
                 <mat-label>Lugar del incidente</mat-label>
                 <input
                   matInput
@@ -39,67 +41,77 @@
                 />
               </mat-form-field>
             </div>
-            <div class="col">
-              <mat-form-field appearance="fill" class="form-field m-1">
-                <mat-label>Temas</mat-label>
-                <input
-                  matInput
-                  formControlName="themes"
-                  [disabled]="true"
-                  class="input-field"
-                />
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="form-field m-1">
-                <mat-label>Tipo de arma</mat-label>
-                <input
-                  matInput
-                  formControlName="type_of_weapon"
-                  [disabled]="true"
-                  class="input-field"
-                />
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="fill" class="form-field m-1">
-                <mat-label>Título</mat-label>
-                <input
-                  matInput
-                  formControlName="title"
-                  [disabled]="true"
-                  class="input-field"
-                />
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="form-field m-1">
-                <mat-label>Fuentes</mat-label>
-                <input
-                  matInput
-                  formControlName="sources"
-                  [disabled]="true"
-                  class="input-field"
-                />
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="fill" class="form-field m-1">
-                <mat-label>Víctimas</mat-label>
-                <input
-                  matInput
-                  formControlName="victims"
-                  [disabled]="true"
-                  class="input-field"
-                />
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="form-field m-1">
-                <mat-label>Agresor o sospechoso</mat-label>
-                <input
-                  matInput
-                  formControlName="perpetrator_or_suspected_aggressor"
-                  [disabled]="true"
-                  class="input-field"
-                />
-              </mat-form-field>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field  class="form-field full-width m-1">
+              <mat-label>Temas</mat-label>
+              <input
+                matInput
+                formControlName="themes"
+                [disabled]="true"
+                class="input-field"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="form-field full-width m-1">
+              <mat-label>Tipo de arma</mat-label>
+              <input
+                matInput
+                formControlName="type_of_weapon"
+                [disabled]="true"
+                class="input-field"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="form-field full-width m-1">
+              <mat-label>Título</mat-label>
+              <input
+                matInput
+                formControlName="title"
+                [disabled]="true"
+                class="input-field"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field  class="form-field  full-width m-1">
+              <mat-label>Fuentes</mat-label>
+              <input
+                matInput
+                formControlName="sources"
+                [disabled]="true"
+                class="input-field"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field  class="form-field full-width m-1">
+              <mat-label>Víctimas</mat-label>
+              <input
+                matInput
+                formControlName="victims"
+                [disabled]="true"
+                class="input-field"
+              />
+            </mat-form-field>
 
+          </div>
+          <div class="col">
+            <mat-form-field  class="form-field full-width m-1">
+              <mat-label>Agresor o sospechoso</mat-label>
+              <input
+                matInput
+                formControlName="perpetrator_or_suspected_aggressor"
+                [disabled]="true"
+                class="input-field"
+              />
+            </mat-form-field>
+          </div>
         </div>
         <div class="row">
           <mat-form-field appearance="fill" class="form-field full-width m-1">
