@@ -1,0 +1,160 @@
+<main class="search-engine">
+  <header class="container">
+    <h1 class="text-center py-5">BUSCADOR DE NOTICIAS GUARDADAS</h1>
+    <form>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Buscar por categoria</mat-label>
+        <input
+          [formControl]="searchControl"
+          matInput
+          placeholder="Homicidio"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          @for (option of filteredOptions | async; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+      <div class="w-100 d-flex justify-content-between">
+        <mat-form-field class="w-32" appearance="outline">
+          <mat-label>Filtro por fecha</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" />
+            <input matEndDate placeholder="End date" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <mat-form-field class="w-32" appearance="outline">
+          <mat-label>Departamentos</mat-label>
+          <input
+            [formControl]="departmentsControl"
+            matInput
+            placeholder="Selecione departamento"
+            [matAutocomplete]="autoDepartments"
+          />
+          <mat-autocomplete #autoDepartments="matAutocomplete">
+            @for (option of filteredOptionsDepartments | async; track option) {
+            <mat-option [value]="option">{{ option }}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="w-32" appearance="outline">
+          <mat-label>Municipios</mat-label>
+          <input
+            [formControl]="townsControl"
+            matInput
+            placeholder="Selecione departamento"
+            [matAutocomplete]="autoTowns"
+          />
+          <mat-autocomplete #autoTowns="matAutocomplete">
+            @for (option of currentDepartment?.towns; track option) {
+            <mat-option [value]="option">{{ option }}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <mat-accordion>
+        <mat-expansion-panel
+          class="box-shadow-none"
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title class="justify-content-end">
+              <mat-slide-toggle [checked]="panelOpenState">
+                <div class="d-flex align-items-center">
+                  Opciones Avanzadas
+                </div></mat-slide-toggle
+              >
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="form-field-container">
+            <mat-form-field
+              class="adv-filter"
+              *ngFor="let case_ of indicators"
+              appearance="outline"
+            >
+              <mat-label>{{ case_ }}</mat-label>
+              <input matInput placeholder="Placeholder" />
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <button
+        class="search-btn green-btn"
+        mat-flat-button
+        color="primary"
+        (click)="onSearch()"
+      >
+        BUSCAR
+      </button>
+    </form>
+  </header>
+  <div class="cards-container container">
+    <div *ngFor="let new of news" class="new-card py-4">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image">
+            <img
+              mat-card-image
+              width="40px"
+              [src]="iconMapper.get(new.source)"
+              alt="Photo of a Shiba Inu"
+            />
+          </div>
+          <mat-card-title>{{ new.title.substring(0, 45) }}...</mat-card-title>
+          <mat-card-subtitle>Etiqueta: {{ new.tag }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ new.text.substring(0, 100) }}...</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <app-button-read></app-button-read>
+          <app-button-report></app-button-report>
+          <a href="{{ new.url }}" target="_blank">sitio de la noticia</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</main>
+
+<!--
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md">
+      <h2>FILTROS</h2>
+    </div>
+    <div class="col-lg-10">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="searchTerm" (keyup)="onSearch()">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Buscar</button>
+        </div>
+      </div>
+      <div *ngIf="results && results.length" class="">
+        <div class="card bg-light border-info mb-3" *ngFor="let item of results">
+          <div class="card-header">
+            <h3 class="card-title text-info">{{ item.title }}</h3>
+          </div>
+          <div class=" card-body " >
+            <h5 class="card-subtitle mb-2 text-muted">{{ item.source }}</h5>
+            <p class="card-text text-justify">{{ item.text }}</p>
+            <span class="badge badge-primary">{{ item.tag }}</span>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="results && !results.length" class="text-muted">No se encontraron resultados.</p>
+    </div>
+
+  </div>
+</div>
+-->
