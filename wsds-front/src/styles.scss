@@ -1,13 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
-
+@import "bootstrap/scss/bootstrap";
 
 // VARAIBLES
 $bg-general-color: #d7e3ff;
 $nav-bar: #005cbb;
+$word-color-01: #005cbb;
 $bg-search-engine: #e0eaee;
+$bg-saved-new-color: #ff7514;

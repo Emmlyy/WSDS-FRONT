@@ -1,0 +1,56 @@
+@import "./../../../styles";
+.search-engine {
+  //background-color: $bg-search-engine;
+}
+.w-32 {
+  width: 32%;
+}
+.search-btn {
+  padding: 25px;
+  width: 100%;
+  border-radius: 5px;
+}
+.form-field-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.adv-filter {
+  flex: 0 1 32%;
+  box-sizing: border-box;
+}
+mat-slide-toggle ::ng-deep {
+  label {
+    margin: 0;
+  }
+}
+.box-shadow-none {
+  box-shadow: none !important;
+}
+mat-accordion ::ng-deep {
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+}
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.new-card {
+  flex: 0 1 32%;
+  box-sizing: border-box;
+}
+
+mat-card {
+  height: 210px;
+}
+
+.text-center {
+  color: #005cbb;
+}
+
+.green-btn {
+  background-color: #3d9970;
+  color: white;
+}

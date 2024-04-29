@@ -2,19 +2,12 @@ import { Component } from '@angular/core';
 import { GemmaService } from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-
-import global from './../../mocks/global';
-interface OnInit {}
-
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.scss',
-  //YourDialog: '../Ficha/ficha.component.html'
+  selector: 'app-saved-news-search-component',
+  templateUrl: './saved-news-search-component.component.html',
+  styleUrl: './saved-news-search-component.component.scss',
 })
-export class SearchComponent implements OnInit {
+export class SavedNewsSearchComponentComponent {
   searchControl = new FormControl('');
   townsControl = new FormControl('');
   departmentsControl = new FormControl('');
@@ -168,24 +161,3 @@ export class SearchComponent implements OnInit {
     console.log(this.departmentsControl.value);
   }
 }
-
-/*
-@Component({
-  selector: '../Ficha/ficha.component',
-  templateUrl: '../Ficha/ficha.component.html',
-  standalone: true,
-  imports: [MatDialogModule, MatButtonModule],
-})
-export class FichaComponent {
-
-  constructor(public dialog: MatDialog) {}
-
-  openDialog() {
-    const dialogRef = this.dialog.open(FichaComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
-}*/
