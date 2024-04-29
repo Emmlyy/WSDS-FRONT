@@ -1,0 +1,38 @@
+/* ficha-details.component.css */
+
+
+
+.card {
+
+  margin: 20px auto;
+}
+/*
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  flex: 1;
+  margin-right: 10px;
+}*/
+
+
+
+.input-field {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.edit-button {
+  align-self: flex-end;
+  margin-top: 20px;
+}

@@ -64,6 +64,9 @@ import {
 import { HttpConfigInterceptor } from './interceptor/http-config.interceptor';
 import { SavedNewsSearchComponentComponent } from './components/saved-news-search-component/saved-news-search-component.component';
 import { RouterModule, Routes } from '@angular/router';
+import {IndicadoresComponent} from './components/Indicadores/prompt.component';
+
+
 const routes: Routes = [
   {
     path: 'Noticias-Guardadas',
@@ -77,6 +80,10 @@ const routes: Routes = [
     path: '',
     component: SearchComponent,
   },
+  {
+    path: 'Indicadores',
+    component: IndicadoresComponent,
+  }
 ];
 
 @NgModule({
@@ -90,6 +97,7 @@ const routes: Routes = [
     ButtonReadComponent,
     NewsDetailsComponent,
     SavedNewsSearchComponentComponent,
+    IndicadoresComponent
   ],
   imports: [
     BrowserModule,
