@@ -124,6 +124,13 @@
         </mat-card-actions>
       </mat-card>
     </div>
+    <div class="new-card py-4">
+      <mat-card *ngIf="loaderInServices">
+        <div class="loader m-auto"></div>
+        <p class="text-center">Generando ficha..</p>
+      </mat-card>
+    </div>
+
   </div>
 </main>
 

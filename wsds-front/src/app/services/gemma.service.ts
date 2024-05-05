@@ -11,7 +11,11 @@ export class GemmaService {
   //http://localhost:3000
   constructor(private http: HttpClient) { }
   searchData(parameter: string): Observable<any> {
-    const urlWithQuery = `${this.apiUrl}/global?search=${parameter}`;
-    return this.http.get(urlWithQuery);
+    const urlWithQuery = `${this.apiUrl}/model_gemma?search=${parameter}`;
+    return this.http.get(urlWithQuery,  {
+      observe: 'events',
+      responseType: 'text',
+      reportProgress: true
+    });
   }
 }
