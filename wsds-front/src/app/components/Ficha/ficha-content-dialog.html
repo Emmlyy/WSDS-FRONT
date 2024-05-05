@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Ficha</h2>
+<div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Clasificación</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      La noticia describe un homicidio, ya que contiene las palabras clave "homicidio" y "feminicidio".
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Extracción de información</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li><strong>Clasificación:</strong> Homicidio</li>
+        <li><strong>Título:</strong> Detienen a sujeto por golpear e intentar matar a su pareja con un cuchillo</li>
+        <li><strong>Resumen:</strong> La policía detuvo a un hombre por presuntamente intentar asesinar a su compañera de vida con un cuchillo.</li>
+        <li><strong>Lugar del incidente:</strong> No se especifica en la noticia.</li>
+        <li><strong>Fuentes:</strong> No se indican en la noticia.</li>
+        <li><strong>Temas:</strong> Violencia contra las mujeres, feminicidio</li>
+        <li><strong>Hechos violatorios:</strong> El hombre golpeó a su mujer y posteriormente intento asesinarla con un cuchillo.</li>
+        <li><strong>Hipótesis de los hechos:</strong> No se especifica en la noticia.</li>
+        <li><strong>Población vulnerable:</strong> No se especifica en la noticia.</li>
+        <li><strong>Tipo de arma:</strong> Cuchillo</li>
+        <li><strong>Víctimas:</strong> La víctima no se identifica en la noticia.</li>
+        <li><strong>Agresor o sospechoso:</strong> El hombre que perpetró el homicidio no se identifica en la noticia.</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

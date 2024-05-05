@@ -1,0 +1,8 @@
+@import "./../../../styles";
+.nav-bar{
+  background-color: $bg-general-color;
+  color: $nav-bar;
+  button{
+    color: $nav-bar;
+  }
+}
