@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { GemmaService } from '../../services/gemma.service';
+import { GemmaService, News } from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 import global from './../../mocks/global';
-import {HttpEventType} from "@angular/common/http";
-import {LoaderService} from "../../services/loader.service";
+import { HttpEventType } from '@angular/common/http';
+import { LoaderService } from '../../services/loader.service';
 interface OnInit {}
 
 @Component({
@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit {
   searchControl = new FormControl('');
   townsControl = new FormControl('');
   departmentsControl = new FormControl('');
-  loaderInServices = false
+  loaderInServices = false;
   results: any[] = [];
   options: string[] = ['Homicidio', 'Feminicidio', 'Asesinato'];
   departments = [
@@ -116,12 +116,15 @@ export class SearchComponent implements OnInit {
         tag: string;
         url: string;
         sheet_id: string;
-        date: string
+        date: string;
       }[]
     | null
     | undefined = null;
 
-  constructor(private gemmaService: GemmaService, private loaderService: LoaderService) {}
+  constructor(
+    private gemmaService: GemmaService,
+    private loaderService: LoaderService
+  ) {}
   ngOnInit() {
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
@@ -139,31 +142,48 @@ export class SearchComponent implements OnInit {
     });
   }
   onSearch(): void {
-
     if (this.searchControl.value) {
-      let current_text = ""
-      this.gemmaService.searchData(this.searchControl.value).subscribe(event => {
-        if (event.type === HttpEventType.Response) {
-          this.loaderInServices = false
-        } else if (event.type === HttpEventType.DownloadProgress) {
-          if (event.partialText.includes("data: True") && !this.loaderInServices){
-            this.loaderService.hide();
-            this.loaderInServices = true
-          } else{
-            let res =  event.partialText
-            res = res.substring(current_text.length)
-            const obj = JSON.parse(res.substring(res.indexOf('[')))
-            current_text = event.partialText
-            this.news =  obj
-            console.log(obj)
+      let current_text = '';
+      this.gemmaService.searchData(this.searchControl.value).subscribe(
+        (event) => {
+          if (event.type === HttpEventType.Response) {
+            this.loaderInServices = false;
+          } else if (event.type === HttpEventType.DownloadProgress) {
+            if (
+              event.partialText.includes('data: True') &&
+              !this.loaderInServices
+            ) {
+              this.loaderService.hide();
+              this.loaderInServices = true;
+            } else {
+              let res = event.partialText;
+              res = res.substring(current_text.length);
+              const obj = JSON.parse(res.substring(res.indexOf('[')));
+              current_text = event.partialText;
+              this.news = obj;
+              console.log(obj);
+            }
           }
+        },
+        (error) => {
+          console.error('Error:', error);
         }
-      }, error => {
-        console.error('Error:', error);
-      });
+      );
     } else {
       this.results = [];
     }
+  }
+
+  saveNews(newData: News): void {
+    console.log(newData);
+    this.gemmaService.postNews(newData).subscribe({
+      next: (response) => {
+        console.log('Noticia guardada con éxito', response);
+      },
+      error: (error) => {
+        console.error('Error al guardar la noticia', error);
+      },
+    });
   }
 
   private _filter(value: string): string[] {

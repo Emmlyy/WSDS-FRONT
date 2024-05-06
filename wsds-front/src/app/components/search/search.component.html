@@ -121,6 +121,7 @@
           <app-button-read></app-button-read>
           <app-button-report></app-button-report>
           <a href="{{ new.url }}" target="_blank">sitio de la noticia</a>
+          <button mat-button (click)="saveNews(new)">Guardar Noticia</button>
         </mat-card-actions>
       </mat-card>
     </div>
@@ -130,7 +131,6 @@
         <p class="text-center">Generando ficha..</p>
       </mat-card>
     </div>
-
   </div>
 </main>
 
