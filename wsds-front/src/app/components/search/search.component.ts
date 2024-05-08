@@ -113,6 +113,9 @@ export class SearchComponent implements OnInit {
         title: string;
         text: string;
         source: string;
+        sheet: {
+          priority: number;
+        };
         tag: string;
         url: string;
         sheet_id: string;
@@ -161,7 +164,7 @@ export class SearchComponent implements OnInit {
               const obj = JSON.parse(res.substring(res.indexOf('[')));
               current_text = event.partialText;
               this.news = obj;
-              console.log(obj);
+              console.log('dd', this.news);
             }
           }
         },
@@ -172,18 +175,6 @@ export class SearchComponent implements OnInit {
     } else {
       this.results = [];
     }
-  }
-
-  saveNews(newData: News): void {
-    console.log(newData);
-    this.gemmaService.postNews(newData).subscribe({
-      next: (response) => {
-        console.log('Noticia guardada con éxito', response);
-      },
-      error: (error) => {
-        console.error('Error al guardar la noticia', error);
-      },
-    });
   }
 
   private _filter(value: string): string[] {

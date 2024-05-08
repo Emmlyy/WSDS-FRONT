@@ -127,21 +127,28 @@
       </form>
 
     -->
-    <form [formGroup]="indicadoresForm" class="form">
-    <div *ngFor="let indicador of indicadores" class="row">
-      <mat-form-field class="form-field full-width m-1">
-        <mat-label>{{ indicador.indicator_name }}</mat-label>
-        <input
-        matInput
-        [formControlName]="indicador.id"
-        [placeholder]="indicador.prompt"
-        [disabled]="disableEdit"
-        class="input-field"
-      />
-      </mat-form-field>
-    </div>
-    <button mat-raised-button color="primary" (click)="toggleFormEdit()" class="edit-button">Editar</button>
-  </form>
+      <form [formGroup]="indicadoresForm" class="form">
+        <div *ngFor="let indicador of indicadores" class="row">
+          <mat-form-field class="form-field full-width m-1">
+            <mat-label>{{ indicador.indicator_name }}</mat-label>
+            <input
+              matInput
+              [formControlName]="indicador.id"
+              [placeholder]="indicador.prompt"
+              [disabled]="disableEdit"
+              class="input-field"
+            />
+          </mat-form-field>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="toggleFormEdit()"
+          class="edit-button"
+        >
+          Editar
+        </button>
+      </form>
     </mat-card-content>
   </mat-card>
 </div>
