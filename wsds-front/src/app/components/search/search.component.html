@@ -116,12 +116,52 @@
         </mat-card-header>
         <mat-card-content>
           <p>{{ new.text.substring(0, 100) }}...</p>
+          <span [ngSwitch]="new.sheet.priority">
+            <img
+              *ngSwitchCase="3"
+              src="../../../assets/Medium.svg"
+              alt="Low Priority"
+              title="Alto Rendimiento"
+              height="30"
+              width="30"
+            />
+            <img
+              *ngSwitchCase="1"
+              src="../../../assets/Lowest.svg"
+              alt="High Priority"
+              title="Modificado Por el Usuario"
+              height="30"
+              width="30"
+            />
+            <img
+              *ngSwitchCase="2"
+              src="../../../assets/Low.svg"
+              alt="Medium Priority"
+              title="Verificado por el usuario"
+              height="30"
+              width="30"
+            />
+            <img
+              *ngSwitchCase="4"
+              src="../../../assets/High.svg"
+              alt="Lowest Priority"
+              title="Analisis de rendimiento estandar"
+              height="30"
+              width="30"
+            />
+          </span>
         </mat-card-content>
         <mat-card-actions>
           <app-button-read></app-button-read>
           <app-button-report></app-button-report>
           <a href="{{ new.url }}" target="_blank">sitio de la noticia</a>
         </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="new-card py-4">
+      <mat-card *ngIf="loaderInServices">
+        <div class="loader m-auto"></div>
+        <p class="text-center">Generando ficha..</p>
       </mat-card>
     </div>
   </div>

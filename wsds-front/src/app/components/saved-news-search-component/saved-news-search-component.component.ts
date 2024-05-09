@@ -128,7 +128,7 @@ export class SavedNewsSearchComponentComponent {
   }
   onSearch(): void {
     if (this.searchControl.value) {
-      this.gemmaService.searchData(this.searchControl.value).subscribe(
+      this.gemmaService.getNews(this.searchControl.value).subscribe(
         (data) => {
           this.news = data;
         },

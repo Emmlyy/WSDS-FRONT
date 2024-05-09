@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { GemmaService } from '../../services/gemma.service';
+import { GemmaService, News } from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 import global from './../../mocks/global';
+import { HttpEventType } from '@angular/common/http';
+import { LoaderService } from '../../services/loader.service';
 interface OnInit {}
 
 @Component({
@@ -18,6 +20,7 @@ export class SearchComponent implements OnInit {
   searchControl = new FormControl('');
   townsControl = new FormControl('');
   departmentsControl = new FormControl('');
+  loaderInServices = false;
   results: any[] = [];
   options: string[] = ['Homicidio', 'Feminicidio', 'Asesinato'];
   departments = [
@@ -110,13 +113,21 @@ export class SearchComponent implements OnInit {
         title: string;
         text: string;
         source: string;
+        sheet: {
+          priority: number;
+        };
         tag: string;
         url: string;
+        sheet_id: string;
+        date: string;
       }[]
     | null
     | undefined = null;
 
-  constructor(private gemmaService: GemmaService) {}
+  constructor(
+    private gemmaService: GemmaService,
+    private loaderService: LoaderService
+  ) {}
   ngOnInit() {
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
@@ -135,13 +146,30 @@ export class SearchComponent implements OnInit {
   }
   onSearch(): void {
     if (this.searchControl.value) {
+      let current_text = '';
       this.gemmaService.searchData(this.searchControl.value).subscribe(
-        (data) => {
-          this.news = data;
+        (event) => {
+          if (event.type === HttpEventType.Response) {
+            this.loaderInServices = false;
+          } else if (event.type === HttpEventType.DownloadProgress) {
+            if (
+              event.partialText.includes('data: True') &&
+              !this.loaderInServices
+            ) {
+              this.loaderService.hide();
+              this.loaderInServices = true;
+            } else {
+              let res = event.partialText;
+              res = res.substring(current_text.length);
+              const obj = JSON.parse(res.substring(res.indexOf('[')));
+              current_text = event.partialText;
+              this.news = obj;
+              console.log('dd', this.news);
+            }
+          }
         },
         (error) => {
-          console.error('Error al obtener datos:', error);
-          this.results = [];
+          console.error('Error:', error);
         }
       );
     } else {
@@ -163,7 +191,6 @@ export class SearchComponent implements OnInit {
       .filter((option) => option.name.toLowerCase().includes(filterValue))
       .map((el) => el.name);
   }
-
   changeDepartments($event: Event) {
     console.log(this.departmentsControl.value);
   }
