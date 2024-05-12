@@ -64,7 +64,7 @@ import {
 import { HttpConfigInterceptor } from './interceptor/http-config.interceptor';
 import { SavedNewsSearchComponentComponent } from './components/saved-news-search-component/saved-news-search-component.component';
 import { RouterModule, Routes } from '@angular/router';
-import {IndicadoresComponent} from './components/Indicadores/prompt.component';
+import {IndicadoresComponent, ButtonNewPromptComponent} from './components/Indicadores/prompt.component';
 
 
 const routes: Routes = [
@@ -95,6 +95,7 @@ const routes: Routes = [
     LayoutComponent,
     ButtonReportComponent,
     ButtonReadComponent,
+    ButtonNewPromptComponent,
     NewsDetailsComponent,
     SavedNewsSearchComponentComponent,
     IndicadoresComponent

@@ -1,11 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 interface Indicador {
   indicator_name: string;
   prompt: string;
   id: number;
 }
+
+@Component({
+  selector: 'app-button-new-promtp',
+  templateUrl: './button-new-prompt.html',
+  //styleUrls: ['./button.component.css']
+})
+export class ButtonNewPromptComponent {
+  constructor(public dialog: MatDialog) {}
+/*
+  openDialog() {
+    const dialogRef = this.dialog.open(NewsDetailsComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }*/
+
+}
+
 
 @Component({
   selector: 'app-indicadores',
