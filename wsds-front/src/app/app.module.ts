@@ -64,8 +64,9 @@ import {
 import { HttpConfigInterceptor } from './interceptor/http-config.interceptor';
 import { SavedNewsSearchComponentComponent } from './components/saved-news-search-component/saved-news-search-component.component';
 import { RouterModule, Routes } from '@angular/router';
-import {IndicadoresComponent, ButtonNewPromptComponent} from './components/Indicadores/prompt.component';
-
+import {IndicadoresComponent, ButtonNewPromptComponent, NewContentDialog, DialogContentNew, NewIndicadorComponent} from './components/Indicadores/prompt.component';
+import {MatDialogModule } from '@angular/material/dialog';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 const routes: Routes = [
   {
@@ -89,6 +90,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    MatDialogModule,
     SearchComponent,
     BannerComponent,
     NavBarComponent,
@@ -98,7 +100,7 @@ const routes: Routes = [
     ButtonNewPromptComponent,
     NewsDetailsComponent,
     SavedNewsSearchComponentComponent,
-    IndicadoresComponent
+    IndicadoresComponent,
   ],
   imports: [
     BrowserModule,
@@ -136,6 +138,9 @@ const routes: Routes = [
     FichaContentDialog,
     DialogContentNews,
     NewsContentDialog,
+    NewContentDialog,
+    DialogContentNew,
+    NewIndicadorComponent
   ],
   providers: [
     provideClientHydration(),
@@ -148,6 +153,7 @@ const routes: Routes = [
     },
   ],
   exports: [RouterModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

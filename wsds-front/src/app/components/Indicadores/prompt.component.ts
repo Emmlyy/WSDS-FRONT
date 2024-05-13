@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 interface Indicador {
   indicator_name: string;
@@ -17,15 +19,75 @@ interface Indicador {
 })
 export class ButtonNewPromptComponent {
   constructor(public dialog: MatDialog) {}
-/*
+
   openDialog() {
-    const dialogRef = this.dialog.open(NewsDetailsComponent);
+    const dialogRef = this.dialog.open(DialogContentNew);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
-  }*/
+  }
 
+}
+
+@Component({
+  selector: 'dialog-content-new',
+  templateUrl: './dialog-content.html',
+  standalone: true,
+  imports: [MatButtonModule, MatCardModule, MatDialogModule],
+})
+export class DialogContentNew {
+  constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogRef = this.dialog.open(NewContentDialog);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+}
+
+@Component({
+  selector: 'dialog-content-example-dialog',
+  templateUrl: './new-content-dialog.html',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule, MatCardModule],
+})
+export class NewContentDialog {}
+
+@Component({
+  selector: 'app-news-details',
+  templateUrl: './form-newPrompt-content-dialog.html',
+  styleUrls: ['./new-form.component.css'],
+})
+export class NewIndicadorComponent implements OnInit {
+  NewIndicadoresForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    // Define los campos del formulario y su estado inicial
+    this.NewIndicadoresForm = this.fb.group({
+      indicador_name: [
+        {
+          value:
+            'hola',
+
+        },
+      ],
+      prompt: [{ value: 'Homicidio'}],
+
+    });
+  }
+
+  toggleFormEdit() {
+    if (this.NewIndicadoresForm.enabled) {
+      this.NewIndicadoresForm.disable();
+    } else {
+      this.NewIndicadoresForm.enable();
+    }
+  }
 }
 
 
