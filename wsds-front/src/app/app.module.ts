@@ -64,9 +64,11 @@ import {
 import { HttpConfigInterceptor } from './interceptor/http-config.interceptor';
 import { SavedNewsSearchComponentComponent } from './components/saved-news-search-component/saved-news-search-component.component';
 import { RouterModule, Routes } from '@angular/router';
-import {IndicadoresComponent, ButtonNewPromptComponent, NewContentDialog, DialogContentNew, NewIndicadorComponent} from './components/Indicadores/prompt.component';
+import {IndicadoresComponent, ButtonNewPromptComponent, NewIndicadorComponent, TabComponent} from './components/Indicadores/prompt.component';
 import {MatDialogModule } from '@angular/material/dialog';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 const routes: Routes = [
   {
@@ -90,7 +92,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MatDialogModule,
     SearchComponent,
     BannerComponent,
     NavBarComponent,
@@ -101,16 +102,22 @@ const routes: Routes = [
     NewsDetailsComponent,
     SavedNewsSearchComponentComponent,
     IndicadoresComponent,
+    NewIndicadorComponent,
+    TabComponent,
+
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    BrowserModule,
+    MatTabsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     MatButtonModule,
     NgbModule,
     MatFormField,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatIcon,
@@ -134,13 +141,12 @@ const routes: Routes = [
     MatCardContent,
     MatCardActions,
     MatCardModule,
-    DialogContentFicha,
     FichaContentDialog,
     DialogContentNews,
     NewsContentDialog,
-    NewContentDialog,
-    DialogContentNew,
-    NewIndicadorComponent
+    DialogContentFicha
+
+
   ],
   providers: [
     provideClientHydration(),

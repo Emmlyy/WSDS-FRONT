@@ -36,7 +36,6 @@ export class FichaContentDialog {}
 @Component({
   selector: 'app-button-report',
   templateUrl: './buttonReport.html',
-  //styleUrls: ['./button.component.css']
 })
 export class ButtonReportComponent {
   constructor(public dialog: MatDialog) {}
