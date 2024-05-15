@@ -115,46 +115,50 @@
           <mat-card-subtitle>Etiqueta: {{ new.tag }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ new.text.substring(0, 100) }}...</p>
+          <p class="m-0">{{ new.text.substring(0, 100) }}...</p>
           <span [ngSwitch]="new.sheet.priority">
             <img
               *ngSwitchCase="3"
-              src="../../../assets/Medium.svg"
+              src="../../../assets/sparkler-high.png"
               alt="Low Priority"
               title="Alto Rendimiento"
-              height="30"
-              width="30"
+              class="priority-indicator"
             />
             <img
               *ngSwitchCase="1"
-              src="../../../assets/Lowest.svg"
+              src="../../../assets/User-Edit.png"
               alt="High Priority"
               title="Modificado Por el Usuario"
-              height="30"
-              width="30"
+              class="priority-indicator"
             />
             <img
               *ngSwitchCase="2"
-              src="../../../assets/Low.svg"
+              src="../../../assets/User-Verification.png"
               alt="Medium Priority"
               title="Verificado por el usuario"
-              height="30"
-              width="30"
+              class="priority-indicator"
             />
             <img
               *ngSwitchCase="4"
-              src="../../../assets/High.svg"
+              src="../../../assets/sparkler.png"
               alt="Lowest Priority"
               title="Analisis de rendimiento estandar"
-              height="30"
-              width="30"
+              class="priority-indicator"
             />
           </span>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions class="mt-auto">
           <app-button-read></app-button-read>
           <app-button-report></app-button-report>
-          <a href="{{ new.url }}" target="_blank">sitio de la noticia</a>
+          <a href="{{ new.url }}" target="_blank" class="ml-auto">
+            <img
+              src="../../../assets/external-link.png"
+              alt="Lowest Priority"
+              title="Analisis de rendimiento estandar"
+              height="15"
+              width="15"
+            />
+          </a>
         </mat-card-actions>
       </mat-card>
     </div>
