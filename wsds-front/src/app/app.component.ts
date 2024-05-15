@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {LoaderService} from "./services/loader.service";
 
 @Component({
@@ -9,5 +9,8 @@ import {LoaderService} from "./services/loader.service";
 export class AppComponent {
   title = 'wsds-front';
   loading = this.loaderService.isLoading;
-  constructor(private loaderService: LoaderService) {}
+  constructor(private loaderService: LoaderService, private cdref: ChangeDetectorRef) {}
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
 }

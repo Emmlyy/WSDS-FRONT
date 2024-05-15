@@ -1,11 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {News} from "../interfaces/news.interface";
 
 @Injectable({
   providedIn: 'root',
 })
+
+
+
 export class GemmaService {
+
+
+
   private apiUrl = 'http://127.0.0.1:8000';
   // http://127.0.0.1:8000/global
   //http://localhost:3000
@@ -31,18 +38,8 @@ export class GemmaService {
       reportProgress: true,
     });
   }
+  getAllNews(): Observable<News[]> {
+    return this.http.get<News[]>(`${this.apiUrl}/news/`);
+  }
 }
 
-export interface News {
-  date: string;
-  sheet_id: string;
-  source: string;
-  tag: string;
-  title: string;
-  text: string;
-  url: string;
-}
-
-export interface new_url {
-  url: string;
-}

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { GemmaService } from '../../services/gemma.service';
+import {GemmaService} from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import {News} from "../../interfaces/news.interface";
 @Component({
   selector: 'app-saved-news-search-component',
   templateUrl: './saved-news-search-component.component.html',
@@ -98,33 +99,11 @@ export class SavedNewsSearchComponentComponent {
     ['diariocolatino.com', './../../assets/colatino.png'],
     ['diarioelsalvador.com', './../../assets/elsalvador.png'],
   ]);
-  news:
-    | {
-        title: string;
-        text: string;
-        source: string;
-        tag: string;
-        url: string;
-      }[]
-    | null
-    | undefined = null;
+  news: News[] | undefined = [];
 
   constructor(private gemmaService: GemmaService) {}
   ngOnInit() {
-    this.filteredOptions = this.searchControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filter(value || ''))
-    );
-    this.filteredOptionsDepartments = this.departmentsControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filterDepartments(value || ''))
-    );
-    this.departmentsControl.valueChanges.subscribe((value) => {
-      this.currentDepartment = this.departments.find(
-        (obj) => obj.name == value
-      );
-      console.log(this.currentDepartment);
-    });
+    this.gemmaService.getAllNews().subscribe(items => this.news = (items))
   }
   onSearch(): void {
     if (this.searchControl.value) {

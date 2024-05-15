@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GemmaService, News } from '../../services/gemma.service';
+import { GemmaService } from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
