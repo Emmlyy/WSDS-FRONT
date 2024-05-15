@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {News} from "../interfaces/news.interface";
+import {INews, ISavedNews} from "../interfaces/news.interface";
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class GemmaService {
     });
   }
 
-  postNews(newData: News): Observable<any> {
+  postNews(newData: INews): Observable<any> {
     console.log('mob', newData);
     return this.http.post(`${this.apiUrl}/news/`, newData);
   }
@@ -38,8 +38,8 @@ export class GemmaService {
       reportProgress: true,
     });
   }
-  getAllNews(): Observable<News[]> {
-    return this.http.get<News[]>(`${this.apiUrl}/news/`);
+  getAllNews(): Observable<ISavedNews[]> {
+    return this.http.get<ISavedNews[]>(`${this.apiUrl}/news-sheet/`);
   }
 }
 

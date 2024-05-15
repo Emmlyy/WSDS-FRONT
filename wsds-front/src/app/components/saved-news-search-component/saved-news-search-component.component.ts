@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {GemmaService} from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import {News} from "../../interfaces/news.interface";
+import {INews, ISavedNews} from "../../interfaces/news.interface";
 @Component({
   selector: 'app-saved-news-search-component',
   templateUrl: './saved-news-search-component.component.html',
@@ -99,7 +99,7 @@ export class SavedNewsSearchComponentComponent {
     ['diariocolatino.com', './../../assets/colatino.png'],
     ['diarioelsalvador.com', './../../assets/elsalvador.png'],
   ]);
-  news: News[] | undefined = [];
+  news: ISavedNews[] | undefined = [];
 
   constructor(private gemmaService: GemmaService) {}
   ngOnInit() {

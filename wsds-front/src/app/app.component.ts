@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class AppComponent {
   title = 'wsds-front';
   loading = this.loaderService.isLoading;
-  messages = ['Extrayendo noticias...', 'Buscando noticias...', 'Scrapeando noticias...'];
+  messages = ['Buscando noticias...'];
   currentMessage$ = interval(3000).pipe(
     map(i => this.messages[i % this.messages.length])
   );
