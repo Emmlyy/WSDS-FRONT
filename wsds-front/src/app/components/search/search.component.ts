@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit {
   departmentsControl = new FormControl('');
   loaderInServices = false;
   results: any[] = [];
+  indicatorsSet: string = "id1";
   options: string[] = ['Homicidio', 'Feminicidio', 'Asesinato'];
   departments = [
     {
@@ -102,7 +103,7 @@ export class SearchComponent implements OnInit {
     'Estado del agresor/a después del hecho',
     'Homicidios sin contextos',
   ];
-  panelOpenState: boolean = false;
+  highPerformance: string = "standard";
   iconMapper = new Map([
     ['diario.elmundo.sv', './../../assets/elmundo.png'],
     ['diariocolatino.com', './../../assets/colatino.png'],
@@ -384,6 +385,7 @@ export class SearchComponent implements OnInit {
     }
 
   ]
+
   ngOnInit() {
     //this.news = this.moked
     this.filteredOptions = this.searchControl.valueChanges.pipe(
