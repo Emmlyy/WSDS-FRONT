@@ -3,6 +3,8 @@ import {GemmaService} from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import {INews, ISavedNews} from "../../interfaces/news.interface";
+import {MatDialog} from "@angular/material/dialog";
+import {SheetModalComponent} from "../sheet-modal/sheet-modal.component";
 @Component({
   selector: 'app-saved-news-search-component',
   templateUrl: './saved-news-search-component.component.html',
@@ -101,7 +103,7 @@ export class SavedNewsSearchComponentComponent {
   ]);
   news: ISavedNews[] | undefined = [];
 
-  constructor(private gemmaService: GemmaService) {}
+  constructor(private gemmaService: GemmaService, public dialog: MatDialog) {}
   ngOnInit() {
     this.gemmaService.getAllNews().subscribe(items => this.news = (items))
   }
@@ -138,5 +140,14 @@ export class SavedNewsSearchComponentComponent {
 
   changeDepartments($event: Event) {
     console.log(this.departmentsControl.value);
+  }
+
+  openDialogModifySheet(enterAnimationDuration: string, exitAnimationDuration: string, newSaved: INews) {
+    this.dialog.open(SheetModalComponent, {
+      data: {newSaved},
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

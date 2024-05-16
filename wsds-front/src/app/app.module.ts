@@ -15,12 +15,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import {
-  ButtonReportComponent,
-  FichaContentDialog,
-  DialogContentFicha,
-  NewsDetailsComponent,
-} from './components/Ficha/ficha.component';
-import {
   ButtonReadComponent,
   NewsContentDialog,
   DialogContentNews,
@@ -65,6 +59,7 @@ import { HttpConfigInterceptor } from './interceptor/http-config.interceptor';
 import { SavedNewsSearchComponentComponent } from './components/saved-news-search-component/saved-news-search-component.component';
 import { RouterModule, Routes } from '@angular/router';
 import {IndicadoresComponent} from './components/Indicadores/prompt.component';
+import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
 
 
 const routes: Routes = [
@@ -93,11 +88,10 @@ const routes: Routes = [
     BannerComponent,
     NavBarComponent,
     LayoutComponent,
-    ButtonReportComponent,
     ButtonReadComponent,
-    NewsDetailsComponent,
     SavedNewsSearchComponentComponent,
-    IndicadoresComponent
+    IndicadoresComponent,
+    SheetModalComponent
   ],
   imports: [
     BrowserModule,
@@ -131,8 +125,6 @@ const routes: Routes = [
     MatCardContent,
     MatCardActions,
     MatCardModule,
-    DialogContentFicha,
-    FichaContentDialog,
     DialogContentNews,
     NewsContentDialog,
   ],
