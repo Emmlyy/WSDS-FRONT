@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {GemmaService} from '../../services/gemma.service';
+import { GemmaService } from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import {INews, ISavedNews} from "../../interfaces/news.interface";
-import {MatDialog} from "@angular/material/dialog";
-import {SheetModalComponent} from "../sheet-modal/sheet-modal.component";
+import { INews, ISavedNews } from '../../interfaces/news.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { SheetModalComponent } from '../sheet-modal/sheet-modal.component';
 @Component({
   selector: 'app-saved-news-search-component',
   templateUrl: './saved-news-search-component.component.html',
@@ -105,7 +105,7 @@ export class SavedNewsSearchComponentComponent {
 
   constructor(private gemmaService: GemmaService, public dialog: MatDialog) {}
   ngOnInit() {
-    this.gemmaService.getAllNews().subscribe(items => this.news = (items))
+    this.gemmaService.getAllNews().subscribe((items) => (this.news = items));
   }
   onSearch(): void {
     if (this.searchControl.value) {
@@ -142,10 +142,15 @@ export class SavedNewsSearchComponentComponent {
     console.log(this.departmentsControl.value);
   }
 
-  openDialogModifySheet(enterAnimationDuration: string, exitAnimationDuration: string, newSaved: INews) {
+  openDialogModifySheet(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    newSaved: ISavedNews
+  ) {
     this.dialog.open(SheetModalComponent, {
-      data: {newSaved},
-      width: '250px',
+      data: { newSaved },
+      width: '60vw',
+      height: '60vh',
       enterAnimationDuration,
       exitAnimationDuration,
     });

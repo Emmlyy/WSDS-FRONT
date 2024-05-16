@@ -1,0 +1,24 @@
+.indicator-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.indicator-column {
+  flex: 1 0 22%;
+  margin-right: 2%;
+}
+
+.mat-input-element {
+  padding: 10px 14px;
+  font-size: 16px;
+}
+
+.mat-form-field {
+  font-size: 18px;
+}
+
+.sheet-container {
+  margin-top: 12px !important;
+  margin-left: 40px !important;
+}

@@ -1,1 +1,25 @@
-<p>sheet-modal works!</p>
+<div class="sheet-container">
+  <ng-container
+    *ngFor="let indicador of data.newSaved!.sheet!.indicators; let i = index"
+  >
+    <div *ngIf="i % 4 === 0" class="indicator-row">
+      <mat-form-field
+        appearance="fill"
+        *ngFor="let j of [0, 1, 2, 3]; let k = index"
+        class="indicator-column"
+      >
+        <mat-label *ngIf="data.newSaved!.sheet!.indicators[i + k]">{{
+          data.newSaved!.sheet!.indicators[i + k].indicator_name
+        }}</mat-label>
+        <input
+          matInput
+          *ngIf="data.newSaved!.sheet!.indicators[i + k]"
+          [placeholder]="
+            data.newSaved!.sheet!.indicators[i + k]!.indicator_name
+          "
+          [(ngModel)]="data.newSaved!.sheet!.indicators[i + k]!.response"
+        />
+      </mat-form-field>
+    </div>
+  </ng-container>
+</div>
