@@ -10,16 +10,21 @@ import {INews, ISavedNews} from "../interfaces/news.interface";
 
 
 export class GemmaService {
-
-
-
   private apiUrl = 'http://127.0.0.1:8000';
   // http://127.0.0.1:8000/global
   //http://localhost:3000
   constructor(private http: HttpClient) {}
-  searchData(parameter: string): Observable<any> {
-    const urlWithQuery = `${this.apiUrl}/model_gemma?search=${parameter}`;
+
+  searchData(search: string, date_start: string, date_end: string, performance: string): Observable<any> {
+    const params = new HttpParams()
+      .set('search', search)
+      .set('date_start', formatDate(date_start))
+      .set('date_end', formatDate(date_end))
+      .set('gemma_mode', performance);
+
+    const urlWithQuery = `${this.apiUrl}/model_gemma`;
     return this.http.get(urlWithQuery, {
+      params,
       observe: 'events',
       responseType: 'text',
       reportProgress: true,
@@ -43,3 +48,15 @@ export class GemmaService {
   }
 }
 
+const formatDate = (fecha: string) => {
+  if (fecha === ""){
+    return ""
+  }
+  const dateObj: Date = new Date(fecha);
+
+  const year: number = dateObj.getFullYear();
+  const month: number = dateObj.getMonth() + 1;
+  const day: number = dateObj.getDate();
+  const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+  return formattedDate;
+}

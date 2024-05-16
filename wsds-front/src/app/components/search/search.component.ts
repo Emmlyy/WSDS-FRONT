@@ -22,6 +22,8 @@ export class SearchComponent implements OnInit {
   departmentsControl = new FormControl('');
   loaderInServices = false;
   results: any[] = [];
+  date_start: string = "";
+  date_end: string = "";
   indicatorsSet: string = "id1";
   options: string[] = ['Homicidio', 'Feminicidio', 'Asesinato'];
   departments = [
@@ -406,7 +408,7 @@ export class SearchComponent implements OnInit {
   onSearch(): void {
     if (this.searchControl.value) {
       let current_text = '';
-      this.gemmaService.searchData(this.searchControl.value).subscribe(
+      this.gemmaService.searchData(this.searchControl.value, this.date_start, this.date_end, this.highPerformance).subscribe(
         (event) => {
           if (event.type === HttpEventType.Response) {
             this.loaderInServices = false;

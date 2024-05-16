@@ -20,8 +20,8 @@
         <mat-form-field class="w-32" appearance="outline">
           <mat-label>Filtro por fecha</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Start date" />
-            <input matEndDate placeholder="End date" />
+            <input matStartDate placeholder="Start date" name="date_start" [(ngModel)]="date_start" />
+            <input matEndDate placeholder="End date"  name="date_end" [(ngModel)]="date_end" />
           </mat-date-range-input>
           <mat-datepicker-toggle
             matIconSuffix
@@ -31,11 +31,13 @@
         </mat-form-field>
 
         <mat-form-field class="w-32" appearance="outline">
+          <mat-label>Indicadores aplicables</mat-label>
           <mat-select [(value)]="indicatorsSet">
             <mat-option value="id1">Derecho a la vida</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="w-32" appearance="outline">
+          <mat-label>Modo de rendimiento</mat-label>
           <mat-select [(value)]="highPerformance">
             <mat-select-trigger>
               <img
