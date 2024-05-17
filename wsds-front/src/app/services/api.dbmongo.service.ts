@@ -22,6 +22,18 @@ export class DBService {
       reportProgress: true,
     });
   }
+  searchAllPromptEntryData(): Observable<any> {
+    const urlWithQuery = `${this.apiUrl}/promptsEntry`;
+    /*const req = new HttpRequest('GET', this.apiUrl, {
+      reportProgress: true
+    });
+    return this.http.request(req);*/
+    return this.http.get(urlWithQuery, {
+      observe: 'events',
+      responseType: 'text',
+      reportProgress: true,
+    });
+  }
 
 
   createIndicator(indicator: any): Observable<any> {

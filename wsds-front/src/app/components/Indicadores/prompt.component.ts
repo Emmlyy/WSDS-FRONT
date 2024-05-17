@@ -7,9 +7,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {DBService} from '../../services/api.dbmongo.service'
 import { HttpEventType } from '@angular/common/http';
 
-interface Indicador {
+interface Indicator {
   indicator_name: string;
   prompt: string;
+  id: number;
+}
+interface IndicatorEntry {
+  indicators: Indicator[],
+  name: string;
   id: number;
 }
 
@@ -64,8 +69,7 @@ export class NewIndicadorComponent  {
       "indicator_name": this.NewIndicadorForm.value.indicator_name,
       "prompt": this.NewIndicadorForm.value.description
     };
-
-      if (this.NewIndicadorForm.valid) {
+      if (this.NewIndicadorForm.valid && newIndicator.prompt!=='' ) {
         this.DBService.createIndicator(newIndicator).subscribe(
           response => {
             console.log('Prompt creado con éxito:', response);
@@ -87,86 +91,19 @@ export class NewIndicadorComponent  {
 })
 export class IndicadoresComponent implements OnInit {
   indicadoresForm: FormGroup;
-  indicadores: Indicador[] = [];
+  indicadores: Indicator[] = [];
   //indicadores: any;
   disableEdit: boolean = true;
   loaderInServices = false;
-  current_text: any;
-  responseArray: any [] = [];
+  //current_text: any;
+  //responseArray: any [] = [];
 
   constructor(private DBService: DBService, private fb: FormBuilder) {
     this.indicadoresForm = this.fb.group({});
   }
 
   ngOnInit(): void {
-    // Simulación de la obtención del JSON de indicadores desde algún servicio
-    /*const jsonIndicadores: Indicador[] = [
-        {
-          "indicator_name": "Clasificación",
-          "prompt": "Clasifica el tipo de incidente reportado",
-          "id": 2,
-        },
-        {
-          "indicator_name": "Título",
-          "prompt": "Extrae el título de la noticia",
-          "id": 3,
-        },
-        {
-          "indicator_name": "Resumen",
-          "prompt": "Proporciona un breve resumen de la noticia",
-          "id": 4,
-        },
-        {
-          "indicator_name": "Lugar de los Hechos",
-          "prompt": "Dónde ocurrió el suceso",
-          "id": 5,
-        },
-        {
-          "indicator_name": "Fuentes",
-          "prompt": "Cita las fuentes de información",
-          "id": 6,
-        },
-        {
-          "indicator_name": "Temas",
-          "prompt": "Los temas principales tratados",
-          "id": 7,
-        },
-        {
-          "indicator_name": "Hechos Violatorios",
-          "prompt": "Detalles específicos sobre la violación a la ley",
-          "id": 8,
-        },
-        {
-          "indicator_name": "Hipótesis de Hechos",
-          "prompt": "Cualquier teoría o suposición presentada",
-          "id": 9,
-        },
-        {
-          "indicator_name": "Población Vulnerable",
-          "prompt": "Grupos en riesgo mencionados",
-          "id": 10,
-        },
-        {
-          "indicator_name": "Tipo de Arma",
-          "prompt": "Especifica el tipo de arma, si se menciona",
-          "id": 11,
-        },
-        {
-          "indicator_name": "Víctimas",
-          "prompt": "Identifica a las víctimas, si es posible",
-          "id": 12,
-        },
-        {
-          "indicator_name": "Victimario o Presunto Agresor",
-          "prompt": "Nombre del agresor, si se menciona",
-          "id": 13,
-        }
 
-
-    ];*/
-
-    // Asignar el JSON de indicadores y crear FormControl para cada uno
-    //this.indicadores = jsonIndicadores;
     this.loadPrompts();
 
     this.indicadores.forEach((ind: { toString: () => any; prompt: any; }) => {
@@ -225,8 +162,67 @@ export class IndicadoresComponent implements OnInit {
 @Component({
   selector: 'tab-entryPrompt',
   templateUrl: './tab-prompt.html',
-  //styleUrls: ['./prompt-form.component.css']
 })
-export class TabComponent{
+export class TabComponent implements OnInit {
+  indicatorEntry: any[] = [];
+  loaderInServices = false;
+  indicatorEntryForm: FormGroup;
+  disableEdit: boolean = true;
 
+  constructor(private DBService: DBService, private fb: FormBuilder) {
+    this.indicatorEntryForm = this.fb.group({});
+  }
+
+  ngOnInit(): void {
+    this.loadPrompts();
+  }
+
+  toggleFormEdit() {
+    this.disableEdit = !this.disableEdit;
+    Object.keys(this.indicatorEntryForm.controls).forEach(entryId => {
+      const entryGroup = this.indicatorEntryForm.get(entryId) as FormGroup;
+      if (entryGroup) {
+        Object.keys(entryGroup.controls).forEach(indicatorId => {
+          const control = entryGroup.get(indicatorId);
+          if (control) {
+            this.disableEdit ? control.disable() : control.enable();
+          }
+        });
+      }
+    });
+  }
+
+
+  loadPrompts(): void {
+    this.DBService.searchAllPromptEntryData().subscribe(
+      event => {
+        if (event.type === HttpEventType.Response) {
+          this.loaderInServices = false;
+          let response;
+          if (typeof event.body === 'string') {
+            response = JSON.parse(event.body);
+          } else {
+            response = event.body;
+          }
+
+          if (Array.isArray(response)) {
+            this.indicatorEntry = response;
+            console.log('Prompts entry:', this.indicatorEntry);
+            this.indicatorEntry.forEach(entry => {
+              const entryGroup = this.fb.group({});
+              entry.indicators.forEach((indicator: { id: string; prompt: any; }) => {
+                entryGroup.addControl(
+                  indicator.id, this.fb.control({ value: indicator.prompt, disabled: this.disableEdit })
+                );
+              });
+              this.indicatorEntryForm.addControl(entry.id, entryGroup);
+            });
+          }
+        }
+      },
+      error => {
+        console.error('Error al obtener los prompts:', error);
+      }
+    );
+  }
 }
