@@ -38,6 +38,11 @@ export class GemmaService {
       reportProgress: true,
     });
   }
+
+  updateSheet(data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/sheets/url_test`, data);
+  }
+
   getAllNews(): Observable<ISavedNews[]> {
     return this.http.get<ISavedNews[]>(`${this.apiUrl}/news-sheet/`);
   }
