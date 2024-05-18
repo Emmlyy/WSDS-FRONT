@@ -50,6 +50,14 @@ export class DBService {
       reportProgress: true,
     });
   }
+
+  updateEntry(entryId: string, entry: any): Observable<any> {
+    const urlWithQuery = `${this.apiUrl}/promptsEntry`;
+
+    return this.http.put(`${urlWithQuery}/${entryId}`, entry);
+  }
+
+
 }
 
 
