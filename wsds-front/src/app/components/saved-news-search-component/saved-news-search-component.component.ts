@@ -49,12 +49,6 @@ export class SavedNewsSearchComponentComponent {
   ngOnInit() {
     this.gemmaService.getAllNews().subscribe((items) => {
       (this.news = items)
-      console.log(items)
-      for (let new_ of this.news){
-        /*if (new_.sheet !== null){
-          this.openDialogModifySheet('0ms', '0ms', new_)
-        }*/
-      }
     });
     this.advFilters = this.fb.group({
       inputs: this.fb.array( this.indicators.map(() => this.fb.control(''))),

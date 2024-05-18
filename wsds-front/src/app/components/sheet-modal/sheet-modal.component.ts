@@ -51,18 +51,30 @@ export class SheetModalComponent  implements AfterViewInit {
   }
 
   saveChanges(): void {
-    if (this.data.newSaved.sheet)
-    this.gemmaService.updateSheet(this.data.newSaved.sheet).subscribe(
-      response => {
-        console.log('Sheet updated successfully', response);
-      },
-      error => {
-        console.error('Error updating sheet', error);
-      }
-    );
+    if (this.data.newSaved.sheet){
+      this.data.newSaved.sheet.priority = 1
+      this.gemmaService.updateSheet(this.data.newSaved.sheet).subscribe(
+        response => {
+          console.log('Sheet updated successfully', response);
+        },
+        error => {
+          console.error('Error updating sheet', error);
+        }
+      );
+    }
   }
 
   validateSheet() {
-    console.log("NEW")
+    if (this.data.newSaved.sheet){
+      this.data.newSaved.sheet.priority = 2
+      this.gemmaService.updateSheet(this.data.newSaved.sheet).subscribe(
+        response => {
+          console.log('Sheet updated successfully', response);
+        },
+        error => {
+          console.error('Error updating sheet', error);
+        }
+      );
+    }
   }
 }
