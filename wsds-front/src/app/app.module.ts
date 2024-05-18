@@ -63,6 +63,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {MatSelect, MatSelectTrigger} from "@angular/material/select";
 import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
 import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
+import { MessageDialogComponent } from './components/message-dialog/message-dialog.component';
 
 
 const routes: Routes = [
@@ -94,7 +95,8 @@ const routes: Routes = [
     ButtonReadComponent,
     SavedNewsSearchComponentComponent,
     IndicadoresComponent,
-    SheetModalComponent
+    SheetModalComponent,
+    MessageDialogComponent
   ],
   imports: [
     BrowserModule,
