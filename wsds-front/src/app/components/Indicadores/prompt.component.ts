@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -6,17 +6,27 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {DBService} from '../../services/api.dbmongo.service'
 import { HttpEventType } from '@angular/common/http';
+import { v4 as uuidv4 } from 'uuid';
+
 
 interface Indicator {
   indicator_name: string;
   prompt: string;
-  id: number;
+  id: string;
 }
 interface IndicatorEntry {
   indicators: Indicator[],
   name: string;
-  id: number;
+  id: string;
 }
+
+let indicatorEntryList: IndicatorEntry[] = [];
+let indicatorEntry: IndicatorEntry = {
+  indicators: [],
+  name: '',
+  id: ''
+};
+
 
 @Component({
   selector: 'app-button-new-promtp',
@@ -42,45 +52,38 @@ export class ButtonNewPromptComponent {
 })
 export class NewIndicadorComponent  {
 
-  NewIndicadorForm!: FormGroup;
-  apiService: any;
+  NewIndicadorForm: FormGroup;
 
-  /*constructor(private fb: FormBuilder) {}
-
-
-  ngOnInit(): void {
-    // Define los campos del formulario y su estado inicial
-    this.NewIndicadoresForm = this.fb.group({
-      indicador_name: [{value:'prueba nombre',disabled: false,},],
-      description: [{value:'',disabled: false,},]
-    });
-  }*/
-
-  constructor(private DBService: DBService, private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private DBService: DBService) {
     this.NewIndicadorForm = this.formBuilder.group({
       indicator_name:  [''],
       description: ['']
     });
   }
 
-  createNewPrompt(){
-
-    const newIndicator = {
-      "indicator_name": this.NewIndicadorForm.value.indicator_name,
-      "prompt": this.NewIndicadorForm.value.description
+  createNewPrompt() {
+    console.log("click crear")
+    const newIndicator:Indicator = {
+      indicator_name: this.NewIndicadorForm.value.indicator_name,
+      prompt: this.NewIndicadorForm.value.description,
+      id: uuidv4()  // Generar ID único
     };
-      if (this.NewIndicadorForm.valid && newIndicator.prompt!=='' ) {
-        this.DBService.createIndicator(newIndicator).subscribe(
-          response => {
-            console.log('Prompt creado con éxito:', response);
-            // Aquí podrías resetear el formulario o realizar otras acciones después de la creación exitosa
-          },
-          error => {
-            console.error('Error al crear el prompt:', error);
-          }
-        );
-      }
+
+    indicatorEntry.indicators.push(newIndicator);
+    console.log("id: ", indicatorEntry.id)
+    console.log("new:", newIndicator.id)
+      this.DBService.updateEntry(indicatorEntry.id, indicatorEntry).subscribe(
+        response => {
+          console.log('Entry updated successfully in backend', response);
+
+        },
+        error => {
+          console.error('Error updating entry in backend', error);
+        }
+      );
+
   }
+
 }
 
 
@@ -168,6 +171,8 @@ export class TabComponent implements OnInit {
   loaderInServices = false;
   indicatorEntryForm: FormGroup;
   disableEdit: boolean = true;
+  selectedTabId: string | null = null;
+
 
   constructor(private DBService: DBService, private fb: FormBuilder) {
     this.indicatorEntryForm = this.fb.group({});
@@ -225,4 +230,48 @@ export class TabComponent implements OnInit {
       }
     );
   }
+
+
+  onTabChange(event: any) {
+
+    indicatorEntry.id = this.indicatorEntry[event.index].id;
+    indicatorEntry.name = this.indicatorEntry[event.index].name;
+    indicatorEntry.indicators = this.indicatorEntry[event.index].indicators;
+
+    console.log("id tab: ", indicatorEntry.id)
+
+  }
+
+  /*addIndicator(Id: string, newIndicatorEntry: Indicator) {
+    const entryId = Id;
+    const newIndicator = newIndicatorEntry;
+
+    console.log("newIndicatorEntry: ",newIndicator )
+
+    const entry = this.indicatorEntry.find(e => e.id === entryId);
+
+    if (entry) {
+      entry.indicators.push(newIndicator);
+
+      // Llamar al servicio para actualizar el backend
+      this.DBService.updateEntry(entryId, entry).subscribe(
+        response => {
+          console.log('Entry updated successfully in backend', response);
+
+          // Actualizar el formulario después de la actualización en el backend
+          const entryGroup = this.indicatorEntryForm.get(entryId) as FormGroup;
+          if (entryGroup) {
+            entryGroup.addControl(
+              newIndicator.id.toString(), this.fb.control({ value: newIndicator.prompt, disabled: this.disableEdit })
+            );
+          }
+        },
+        error => {
+          console.error('Error updating entry in backend', error);
+        }
+      );
+    }
+  }
+*/
+
 }

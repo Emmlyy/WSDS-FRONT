@@ -40,7 +40,7 @@
 
 <div class="">
   <form [formGroup]="indicatorEntryForm" class="form">
-    <mat-tab-group>
+    <mat-tab-group (selectedTabChange)="onTabChange($event)">
       <div *ngFor="let entry of indicatorEntry" class="row">
         <mat-tab [label]="entry.name" class="input-field">
           <div class="card m-5">
@@ -51,15 +51,15 @@
               <mat-card-content>
                 <app-button-new-promtp></app-button-new-promtp>
 
-                <div [formGroupName]="entry.id">
+                <div>
                   <div *ngFor="let indicator of entry.indicators" class="row">
                     <mat-form-field class="form-field full-width m-1">
                       <mat-label>{{ indicator.indicator_name }}</mat-label>
-                      <input matInput [formControlName]="indicator.id" placeholder="{{ indicator.prompt }}" class="input-field" />
+                      <input matInput placeholder="{{ indicator.prompt }}" class="input-field" />
                     </mat-form-field>
                   </div>
                 </div>
-                <button mat-raised-button color="primary" (click)="toggleFormEdit()" class="edit-button">
+                <button mat-raised-button color="primary" (click)="toggleFormEdit()" class="edit-button" >
                   Editar
                 </button>
               </mat-card-content>

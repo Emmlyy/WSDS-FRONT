@@ -54,7 +54,7 @@ export class DBService {
   updateEntry(entryId: string, entry: any): Observable<any> {
     const urlWithQuery = `${this.apiUrl}/promptsEntry`;
 
-    return this.http.put(`${urlWithQuery}/${entryId}`, entry);
+    return this.http.put<any>(`${urlWithQuery}/${entryId}`, entry);
   }
 
 
