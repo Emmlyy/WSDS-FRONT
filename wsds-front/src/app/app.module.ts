@@ -59,6 +59,8 @@ import { HttpConfigInterceptor } from './interceptor/http-config.interceptor';
 import { SavedNewsSearchComponentComponent } from './components/saved-news-search-component/saved-news-search-component.component';
 import { RouterModule, Routes } from '@angular/router';
 import {IndicadoresComponent} from './components/Indicadores/prompt.component';
+import {NgOptimizedImage} from "@angular/common";
+import {MatSelect, MatSelectTrigger} from "@angular/material/select";
 import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
 
 
@@ -127,6 +129,9 @@ const routes: Routes = [
     MatCardModule,
     DialogContentNews,
     NewsContentDialog,
+    NgOptimizedImage,
+    MatSelect,
+    MatSelectTrigger
   ],
   providers: [
     provideClientHydration(),

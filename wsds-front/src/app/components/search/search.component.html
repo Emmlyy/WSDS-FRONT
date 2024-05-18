@@ -20,8 +20,8 @@
         <mat-form-field class="w-32" appearance="outline">
           <mat-label>Filtro por fecha</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Start date" />
-            <input matEndDate placeholder="End date" />
+            <input matStartDate placeholder="Start date" name="date_start" [(ngModel)]="date_start" />
+            <input matEndDate placeholder="End date"  name="date_end" [(ngModel)]="date_end" />
           </mat-date-range-input>
           <mat-datepicker-toggle
             matIconSuffix
@@ -31,63 +31,44 @@
         </mat-form-field>
 
         <mat-form-field class="w-32" appearance="outline">
-          <mat-label>Departamentos</mat-label>
-          <input
-            [formControl]="departmentsControl"
-            matInput
-            placeholder="Selecione departamento"
-            [matAutocomplete]="autoDepartments"
-          />
-          <mat-autocomplete #autoDepartments="matAutocomplete">
-            @for (option of filteredOptionsDepartments | async; track option) {
-            <mat-option [value]="option">{{ option }}</mat-option>
-            }
-          </mat-autocomplete>
+          <mat-label>Indicadores aplicables</mat-label>
+          <mat-select [(value)]="indicatorsSet">
+            <mat-option value="id1">Derecho a la vida</mat-option>
+          </mat-select>
         </mat-form-field>
-
         <mat-form-field class="w-32" appearance="outline">
-          <mat-label>Municipios</mat-label>
-          <input
-            [formControl]="townsControl"
-            matInput
-            placeholder="Selecione departamento"
-            [matAutocomplete]="autoTowns"
-          />
-          <mat-autocomplete #autoTowns="matAutocomplete">
-            @for (option of currentDepartment?.towns; track option) {
-            <mat-option [value]="option">{{ option }}</mat-option>
-            }
-          </mat-autocomplete>
+          <mat-label>Modo de rendimiento</mat-label>
+          <mat-select [(value)]="highPerformance">
+            <mat-select-trigger>
+              <img
+                ngSrc= "{{ highPerformance === 'accurate' ? '../../../assets/sparkler-high.png' :  '../../../assets/sparkler.png'}}"
+                alt="Low Priority"
+                title="Alto Rendimiento"
+                class="priority-indicator-hp mx-1"
+                height="512" width="512"/>
+              <span>{{highPerformance === "accurate" ? "Alto Rendimiento" : "Rendimiento Estandar"}}</span>
+            </mat-select-trigger>
+            <mat-option value="accurate"><div class="d-flex align-items-center">
+              <img
+                ngSrc="../../../assets/sparkler-high.png"
+                alt="Low Priority"
+                title="Alto Rendimiento"
+                class="priority-indicator-hp mx-1"
+                height="512" width="512"/>
+              Alto Rendimiento
+            </div></mat-option>
+            <mat-option value="standard"><div class="d-flex align-items-center">
+              <img
+                ngSrc="../../../assets/sparkler.png"
+                alt="Low Priority"
+                title="Rendimiento Estandar"
+                class="priority-indicator-hp mx-1"
+                height="512" width="512"/>
+              Rendimiento Estandar
+            </div></mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
-
-      <mat-accordion>
-        <mat-expansion-panel
-          class="box-shadow-none"
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title class="justify-content-end">
-              <mat-slide-toggle [checked]="panelOpenState">
-                <div class="d-flex align-items-center">
-                  Opciones Avanzadas
-                </div></mat-slide-toggle
-              >
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="form-field-container">
-            <mat-form-field
-              class="adv-filter"
-              *ngFor="let case_ of indicators"
-              appearance="outline"
-            >
-              <mat-label>{{ case_ }}</mat-label>
-              <input matInput placeholder="Placeholder" />
-            </mat-form-field>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
 
       <button
         class="search-btn"

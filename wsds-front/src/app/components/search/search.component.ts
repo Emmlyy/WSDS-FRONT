@@ -22,6 +22,9 @@ export class SearchComponent implements OnInit {
   departmentsControl = new FormControl('');
   loaderInServices = false;
   results: any[] = [];
+  date_start: string = "";
+  date_end: string = "";
+  indicatorsSet: string = "id1";
   options: string[] = ['Homicidio', 'Feminicidio', 'Asesinato'];
   departments = [
     {
@@ -102,7 +105,7 @@ export class SearchComponent implements OnInit {
     'Estado del agresor/a después del hecho',
     'Homicidios sin contextos',
   ];
-  panelOpenState: boolean = false;
+  highPerformance: string = "standard";
   iconMapper = new Map([
     ['diario.elmundo.sv', './../../assets/elmundo.png'],
     ['diariocolatino.com', './../../assets/colatino.png'],
@@ -384,6 +387,7 @@ export class SearchComponent implements OnInit {
     }
 
   ]
+
   ngOnInit() {
     //this.news = this.moked
     this.filteredOptions = this.searchControl.valueChanges.pipe(
@@ -404,7 +408,7 @@ export class SearchComponent implements OnInit {
   onSearch(): void {
     if (this.searchControl.value) {
       let current_text = '';
-      this.gemmaService.searchData(this.searchControl.value).subscribe(
+      this.gemmaService.searchData(this.searchControl.value, this.date_start, this.date_end, this.highPerformance).subscribe(
         (event) => {
           if (event.type === HttpEventType.Response) {
             this.loaderInServices = false;
