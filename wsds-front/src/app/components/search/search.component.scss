@@ -79,3 +79,13 @@ mat-card{
 @keyframes l8 {
   to {transform:perspective(300px) translateZ(180px);opacity:0}
 }
+.high-performance-container{
+  display: flex;
+  gap: 5px;
+  padding-bottom: 10px;
+  justify-content: end;
+}
+.priority-indicator-hp{
+  width: 20px;
+  height: 20px;
+}
