@@ -22,3 +22,17 @@
   margin-top: 12px !important;
   margin-left: 40px !important;
 }
+.indicator-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.single-column .indicator-column {
+  width: 100%; /* Full width if the text is long */
+}
+
+.double-column .indicator-column {
+  width: 48%; /* Adjust this value based on your design requirements */
+  margin-right: 4%; /* Optional: Adds space between two form fields */
+}

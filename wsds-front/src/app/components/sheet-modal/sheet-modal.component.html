@@ -1,21 +1,33 @@
-<div class="sheet-container">
-  <ng-container *ngFor="let indicador of data.newSaved!.sheet!.indicators; let i = index">
-    <div *ngIf="i % 4 === 0" class="indicator-row">
-      <mat-form-field appearance="fill" *ngFor="let j of [0, 1, 2, 3]; let k = index" class="indicator-column">
-        <mat-label *ngIf="data.newSaved!.sheet!.indicators[i + k]">
-          {{ data.newSaved!.sheet!.indicators[i + k].indicator_name }}
+<h2 mat-dialog-title class="m-0">Ficha de la Noticia</h2>
+<hr class="m-0">
+<mat-dialog-content class="mat-typography">
+  <ng-container *ngFor="let indicator of data.newSaved!.sheet!.indicators; let i = index">
+    <div class="indicator-container"
+         [ngClass]="{'single-column': (indicator.response.length > 50), 'double-column': (indicator.response.length <= 50)}">
+      <mat-form-field appearance="outline" class="indicator-column">
+        <mat-label>
+          {{ indicator.indicator_name }}
         </mat-label>
-        <input
-          matInput
-          *ngIf="data.newSaved!.sheet!.indicators[i + k]"
-          [placeholder]="data.newSaved!.sheet!.indicators[i + k]!.indicator_name"
-          [(ngModel)]="data.newSaved!.sheet!.indicators[i + k]!.response"
-          [disabled]="isDisabled"
-        />
+        <ng-container *ngIf="indicator.response.length > 50; else shortInput">
+          <textarea #textarea matInput
+                    [placeholder]="indicator.indicator_name"
+                    [(ngModel)]="indicator.response"
+                    [readonly]="isDisabled"
+                    style="min-height: 60px;">></textarea>
+        </ng-container>
+        <ng-template #shortInput>
+          <input matInput
+                 [placeholder]="indicator.indicator_name"
+                 [(ngModel)]="indicator.response"
+                 [readonly]="isDisabled">
+        </ng-template>
       </mat-form-field>
     </div>
   </ng-container>
-  <button mat-raised-button (click)="toggleEdit()">{{ isDisabled ? 'Editar' : 'Guardar' }}</button>
-  <button mat-raised-button color="warn" *ngIf="isDisabled" (click)="onCancel()">Cancelar</button>
-  <button mat-raised-button color="warn" *ngIf="!isDisabled" (click)="cancelEdit()">Cancelar</button>
-</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" *ngIf="(data?.newSaved?.sheet?.priority ?? 0) >= 3 && isDisabled" (click)="validateSheet()">Validar ficha</button>
+  <button mat-flat-button color="primary" (click)="toggleEdit()">{{ isDisabled ? 'Editar' : 'Guardar' }}</button>
+  <button mat-flat-button *ngIf="isDisabled" (click)="onCancel()">Cerrar</button>
+  <button mat-flat-button color="warn" *ngIf="!isDisabled" (click)="cancelEdit()">Cancelar</button>
+</mat-dialog-actions>

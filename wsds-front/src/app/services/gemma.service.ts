@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {INews, ISavedNews, ISheet} from "../interfaces/news.interface";
+import {INews, ISavedNews, ISheet, IsheetModal} from "../interfaces/news.interface";
 import {IPrompts} from "../interfaces/indicators.interface";
 
 @Injectable({
@@ -45,8 +45,10 @@ export class GemmaService {
     });
   }
 
-  updateSheet(data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/sheets/url_test`, data);
+  updateSheet(sheet: ISheet): Observable<{ status: string, id: string }> {
+    const params = new HttpParams()
+      .set('sheet_id', sheet.id)
+    return this.http.put<{ status: string, id: string }>(`${this.apiUrl}/sheets/`, sheet, {params});
   }
 
   getAllNews(): Observable<ISavedNews[]> {

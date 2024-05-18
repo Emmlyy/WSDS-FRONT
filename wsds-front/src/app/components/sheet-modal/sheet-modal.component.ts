@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, QueryList, ViewChildren} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IsheetModal } from '../../interfaces/news.interface';
 import { GemmaService } from '../../services/gemma.service';
@@ -7,7 +7,7 @@ import { GemmaService } from '../../services/gemma.service';
   templateUrl: './sheet-modal.component.html',
   styleUrls: ['./sheet-modal.component.scss'],
 })
-export class SheetModalComponent {
+export class SheetModalComponent  implements AfterViewInit {
   isDisabled = true; // Propiedad para controlar el estado de los inputs
 
   constructor(
@@ -15,11 +15,16 @@ export class SheetModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: IsheetModal,
     private gemmaService: GemmaService
   ) {}
-
+  @ViewChildren('textarea') textAreas!: QueryList<ElementRef>;
   ngOnInit() {
-    console.log(this.data.newSaved.sheet);
+    console.log(this.data.newSaved);
   }
-
+  adjustTextAreaHeight(event: Event) {
+    const textArea = event.target as HTMLTextAreaElement;
+    //textArea.style.height = 'auto';  // Reset the height
+    textArea.style.height = textArea.scrollHeight + 'px';  // Set the height to scroll height
+    //console.log(textArea)
+  }
   toggleEdit() {
     if (this.isDisabled) {
       this.isDisabled = false;
@@ -28,7 +33,15 @@ export class SheetModalComponent {
       this.isDisabled = true;
     }
   }
-
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.textAreas.forEach((textAreaRef) => {
+        const textArea = textAreaRef.nativeElement as HTMLTextAreaElement;
+        textArea.style.height = 'auto';  // Reset the height
+        textArea.style.height = textArea.scrollHeight + 'px';  // Set the height based on scroll height
+      });
+    }, 0);
+  }
   onCancel(): void {
     this.dialogRef.close();
   }
@@ -38,6 +51,7 @@ export class SheetModalComponent {
   }
 
   saveChanges(): void {
+    if (this.data.newSaved.sheet)
     this.gemmaService.updateSheet(this.data.newSaved.sheet).subscribe(
       response => {
         console.log('Sheet updated successfully', response);
@@ -46,5 +60,9 @@ export class SheetModalComponent {
         console.error('Error updating sheet', error);
       }
     );
+  }
+
+  validateSheet() {
+    console.log("NEW")
   }
 }

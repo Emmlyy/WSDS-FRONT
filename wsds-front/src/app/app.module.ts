@@ -62,6 +62,7 @@ import {IndicadoresComponent} from './components/Indicadores/prompt.component';
 import {NgOptimizedImage} from "@angular/common";
 import {MatSelect, MatSelectTrigger} from "@angular/material/select";
 import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 
 
 const routes: Routes = [
@@ -131,7 +132,10 @@ const routes: Routes = [
     NewsContentDialog,
     NgOptimizedImage,
     MatSelect,
-    MatSelectTrigger
+    MatSelectTrigger,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle
   ],
   providers: [
     provideClientHydration(),
