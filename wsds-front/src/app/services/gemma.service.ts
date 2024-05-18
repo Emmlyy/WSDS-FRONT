@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {INews, ISavedNews} from "../interfaces/news.interface";
+import {INews, ISavedNews, ISheet} from "../interfaces/news.interface";
+import {IPrompts} from "../interfaces/indicators.interface";
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,17 @@ export class GemmaService {
   }
   getAllNews(): Observable<ISavedNews[]> {
     return this.http.get<ISavedNews[]>(`${this.apiUrl}/news-sheet/`);
+  }
+  getFilteredNews(search_word: string = "", filters_sheet: ISheet | null = null, date_start: string = "", date_end: string = ""): Observable<ISavedNews[]> {
+    const params = new HttpParams()
+      .set('search_word', search_word)
+      .set('date_start', formatDate(date_start))
+      .set('date_end', formatDate(date_end))
+
+    return this.http.post<ISavedNews[]>(`${this.apiUrl}/news-sheet-filter/`, filters_sheet, {params, });
+  }
+  getIndicators(type: string = ""): Observable<IPrompts[]> {
+    return this.http.get<IPrompts[]>(`${this.apiUrl}/prompts/`);
   }
 }
 
