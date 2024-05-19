@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {LoaderService} from "./services/loader.service";
+import { interval } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +11,12 @@ import {LoaderService} from "./services/loader.service";
 export class AppComponent {
   title = 'wsds-front';
   loading = this.loaderService.isLoading;
-  constructor(private loaderService: LoaderService) {}
+  messages = ['Buscando noticias...'];
+  currentMessage$ = interval(3000).pipe(
+    map(i => this.messages[i % this.messages.length])
+  );
+  constructor(private loaderService: LoaderService, private cdref: ChangeDetectorRef) {}
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
 }

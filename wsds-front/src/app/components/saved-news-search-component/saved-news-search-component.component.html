@@ -1,27 +1,27 @@
 <main class="search-engine">
   <header class="container">
-    <h1 class="text-center py-5">BUSCADOR DE NOTICIAS GUARDADAS</h1>
-    <form>
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Buscar por categoria</mat-label>
-        <input
-          [formControl]="searchControl"
-          matInput
-          placeholder="Homicidio"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete #auto="matAutocomplete">
-          @for (option of filteredOptions | async; track option) {
-          <mat-option [value]="option">{{ option }}</mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field>
-      <div class="w-100 d-flex justify-content-between">
+    <h1 class="text-center py-5">BUSCADOR DE NOTICIAS</h1>
+    <form [formGroup] = "advFilters">
+      <div class="d-flex">
+        <mat-form-field appearance="outline" class="w-75 main-search">
+          <mat-label>Buscar por categoria</mat-label>
+          <input
+            formControlName="searchControl"
+            matInput
+            placeholder="Homicidio"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            @for (option of filteredOptions | async; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
         <mat-form-field class="w-32" appearance="outline">
           <mat-label>Filtro por fecha</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Start date" />
-            <input matEndDate placeholder="End date" />
+            <input matStartDate placeholder="Start date" name="date_start" formControlName="dateStart"/>
+            <input matEndDate placeholder="End date" name="date_end" formControlName="dateEnd"/>
           </mat-date-range-input>
           <mat-datepicker-toggle
             matIconSuffix
@@ -29,38 +29,7 @@
           ></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
-
-        <mat-form-field class="w-32" appearance="outline">
-          <mat-label>Departamentos</mat-label>
-          <input
-            [formControl]="departmentsControl"
-            matInput
-            placeholder="Selecione departamento"
-            [matAutocomplete]="autoDepartments"
-          />
-          <mat-autocomplete #autoDepartments="matAutocomplete">
-            @for (option of filteredOptionsDepartments | async; track option) {
-            <mat-option [value]="option">{{ option }}</mat-option>
-            }
-          </mat-autocomplete>
-        </mat-form-field>
-
-        <mat-form-field class="w-32" appearance="outline">
-          <mat-label>Municipios</mat-label>
-          <input
-            [formControl]="townsControl"
-            matInput
-            placeholder="Selecione departamento"
-            [matAutocomplete]="autoTowns"
-          />
-          <mat-autocomplete #autoTowns="matAutocomplete">
-            @for (option of currentDepartment?.towns; track option) {
-            <mat-option [value]="option">{{ option }}</mat-option>
-            }
-          </mat-autocomplete>
-        </mat-form-field>
       </div>
-
       <mat-accordion>
         <mat-expansion-panel
           class="box-shadow-none"
@@ -76,21 +45,21 @@
               >
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div class="form-field-container">
+          <div formArrayName="inputs" class="form-field-container">
             <mat-form-field
               class="adv-filter"
-              *ngFor="let case_ of indicators"
+              *ngFor="let control of advFilters_.controls; let i = index"
               appearance="outline"
             >
-              <mat-label>{{ case_ }}</mat-label>
-              <input matInput placeholder="Placeholder" />
+              <mat-label>{{ indicators[i]?.indicator_name }}</mat-label>
+              <input matInput [formControlName]="i" [placeholder]="indicators[i].indicator_name" />
             </mat-form-field>
           </div>
         </mat-expansion-panel>
       </mat-accordion>
 
       <button
-        class="search-btn green-btn"
+        class="search-btn"
         mat-flat-button
         color="primary"
         (click)="onSearch()"
@@ -115,12 +84,58 @@
           <mat-card-subtitle>Etiqueta: {{ new.tag }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ new.text.substring(0, 100) }}...</p>
+          <p class="m-0">{{ new.text.substring(0, 100) }}...</p>
+          <span *ngIf="new.sheet !== null" [ngSwitch]="new.sheet.priority">
+            <img
+              *ngSwitchCase="3"
+              src="../../../assets/sparkler-high.png"
+              alt="Low Priority"
+              title="Alto Rendimiento"
+              class="priority-indicator"
+            />
+            <img
+              *ngSwitchCase="1"
+              src="../../../assets/User-Edit.png"
+              alt="High Priority"
+              title="Modificado Por el Usuario"
+              class="priority-indicator"
+            />
+            <img
+              *ngSwitchCase="2"
+              src="../../../assets/User-Verification.png"
+              alt="Medium Priority"
+              title="Verificado por el usuario"
+              class="priority-indicator"
+            />
+            <img
+              *ngSwitchCase="4"
+              src="../../../assets/sparkler.png"
+              alt="Lowest Priority"
+              title="Analisis de rendimiento estandar"
+              class="priority-indicator"
+            />
+          </span>
+          <span *ngIf="new.sheet === null">
+            <img
+              src="../../../assets/warning.png"
+              alt="Ficha no generada, revisar manualmente"
+              title="Ficha no generada, revisar manualmente"
+              class="priority-indicator"
+            />
+          </span>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions class="mt-auto">
           <app-button-read></app-button-read>
-          <app-button-report></app-button-report>
-          <a href="{{ new.url }}" target="_blank">sitio de la noticia</a>
+          <button (click)="openDialogModifySheet('0ms', '0ms', new)" mat-flat-button>Reporte</button>
+          <a href="{{ new.url }}" target="_blank" class="ml-auto">
+            <img
+              src="../../../assets/external-link.png"
+              alt="Lowest Priority"
+              title="Analisis de rendimiento estandar"
+              height="15"
+              width="15"
+            />
+          </a>
         </mat-card-actions>
       </mat-card>
     </div>

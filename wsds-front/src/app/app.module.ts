@@ -15,12 +15,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import {
-  ButtonReportComponent,
-  FichaContentDialog,
-  DialogContentFicha,
-  NewsDetailsComponent,
-} from './components/Ficha/ficha.component';
-import {
   ButtonReadComponent,
   NewsContentDialog,
   DialogContentNews,
@@ -64,10 +58,16 @@ import {
 import { HttpConfigInterceptor } from './interceptor/http-config.interceptor';
 import { SavedNewsSearchComponentComponent } from './components/saved-news-search-component/saved-news-search-component.component';
 import { RouterModule, Routes } from '@angular/router';
+import {NgOptimizedImage} from "@angular/common";
+import {MatSelect, MatSelectTrigger} from "@angular/material/select";
+import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
+import { MessageDialogComponent } from './components/message-dialog/message-dialog.component';
 import {IndicadoresComponent, ButtonNewPromptComponent, NewIndicadorComponent, TabComponent} from './components/Indicadores/prompt.component';
 import {MatDialogModule } from '@angular/material/dialog';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import {NewsDetailsComponent} from "./components/Ficha/ficha.component";
 
 
 const routes: Routes = [
@@ -96,7 +96,6 @@ const routes: Routes = [
     BannerComponent,
     NavBarComponent,
     LayoutComponent,
-    ButtonReportComponent,
     ButtonReadComponent,
     ButtonNewPromptComponent,
     NewsDetailsComponent,
@@ -104,7 +103,9 @@ const routes: Routes = [
     IndicadoresComponent,
     NewIndicadorComponent,
     TabComponent,
-
+    IndicadoresComponent,
+    SheetModalComponent,
+    MessageDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -144,6 +145,12 @@ const routes: Routes = [
     FichaContentDialog,
     DialogContentNews,
     NewsContentDialog,
+    NgOptimizedImage,
+    MatSelect,
+    MatSelectTrigger,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle
     DialogContentFicha
 
 
@@ -159,7 +166,6 @@ const routes: Routes = [
     },
   ],
   exports: [RouterModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
