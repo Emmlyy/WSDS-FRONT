@@ -3,6 +3,8 @@ import {IndicatorService} from "../../services/indicator.service";
 import {IIndicator, IIndicatorEntry} from "../../interfaces/indicators.interface";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {IndicatorModalComponent} from "../indicator-modal/indicator-modal.component";
 
 @Component({
   selector: 'app-indicators',
@@ -16,7 +18,7 @@ export class IndicatorsComponent {
   currentIndicators!: IIndicatorEntry;
   indicatorForm!: FormGroup;
 
-  constructor(private indicatorService: IndicatorService, private fb: FormBuilder) {
+  constructor(private indicatorService: IndicatorService, private fb: FormBuilder, private dialog: MatDialog) {
   }
 
   get indicatorsForm() {
@@ -65,4 +67,9 @@ export class IndicatorsComponent {
   /*toggleFormEdit() {
     this.isEditModeEnable ? this.indicadoresForm.disable() : this.indicadoresForm.enable();
   }*/
+  changeSettingName() {
+    this.dialog.open(IndicatorModalComponent, {
+      data: {setting: this.currentIndicators, isCreate: false},
+    })
+  }
 }

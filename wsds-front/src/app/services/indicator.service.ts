@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {IIndicatorEntry} from "../interfaces/indicators.interface";
 
 @Injectable({
   providedIn: 'root',
@@ -27,9 +28,9 @@ export class IndicatorService {
   getPrompt(prompt_id: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/prompts/${prompt_id}`);
   }
-  updateEntry(entryId: string, entry: any): Observable<any> {
-    const urlWithQuery = `${this.apiUrl}/promptsEntry`;
-    return this.http.put<any>(`${urlWithQuery}/${entryId}`, entry);
+  updateEntry(entryId: string, entry: IIndicatorEntry): Observable<{ message: string }> {
+    const urlWithQuery = `${this.apiUrl}/promptsEntry/${entryId}`;
+    return this.http.put<{ message: string }>(urlWithQuery, entry);
   }
 }
 
