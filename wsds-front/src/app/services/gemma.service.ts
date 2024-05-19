@@ -71,6 +71,9 @@ export class GemmaService {
   getIndicators(type: string = ""): Observable<IPrompts[]> {
     return this.http.get<IPrompts[]>(`${this.apiUrl}/prompts/`);
   }
+  generateSheet(new_ : INews): Observable<{ indicator_name: string, response: string }[]> {
+    return this.http.post<{ indicator_name: string, response: string }[]>(`${this.apiUrl}/generate_sheet/`, new_);
+  }
 }
 
 const formatDate = (fecha: string) => {

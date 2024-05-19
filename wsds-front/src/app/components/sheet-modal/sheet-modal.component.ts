@@ -117,4 +117,28 @@ export class SheetModalComponent  implements AfterViewInit {
       }
     )
   }
+
+  generateSheetAI() {
+    this.gemmaService.generateSheet(this.data.newSaved).subscribe(value => {
+      this.data.newSaved.sheet = {
+        indicators: value,
+        priority: 3,
+        id: this.data.newSaved.url
+      }
+      this.isSheetSaved = true
+      this.gemmaService.createSheet(this.data.newSaved.sheet).subscribe(value => {
+        console.log(value)
+        setTimeout(() => {
+          this.textAreas.forEach((textAreaRef) => {
+            const textArea = textAreaRef.nativeElement as HTMLTextAreaElement;
+            textArea.style.height = 'auto';  // Reset the height
+            textArea.style.height = textArea.scrollHeight + 'px';  // Set the height based on scroll height
+          });
+        }, 0);
+        this.openSnackBar("Ficha creada lista para ser llenada", "Cerrar")
+      }, error => {
+        this.openSnackBar("Error creando ficha", "Cerrar")
+      })
+    })
+  }
 }
