@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {INews, ISavedNews, ISheet} from "../interfaces/news.interface";
+import {INews, ISavedNews, ISheet, IsheetModal} from "../interfaces/news.interface";
 import {IPrompts} from "../interfaces/indicators.interface";
 
 @Injectable({
@@ -44,6 +44,19 @@ export class GemmaService {
       reportProgress: true,
     });
   }
+
+  updateSheet(sheet: ISheet): Observable<{ status: string, id: string }> {
+    const params = new HttpParams()
+      .set('sheet_id', sheet.id)
+    return this.http.put<{ status: string, id: string }>(`${this.apiUrl}/sheets/`, sheet, {params});
+  }
+
+  createSheet(sheet: ISheet): Observable<{ status: string, id: string }> {
+    const params = new HttpParams()
+      .set('sheet_id', sheet.id)
+    return this.http.post<{ status: string, id: string }>(`${this.apiUrl}/sheets/`, sheet);
+  }
+
   getAllNews(): Observable<ISavedNews[]> {
     return this.http.get<ISavedNews[]>(`${this.apiUrl}/news-sheet/`);
   }
@@ -57,6 +70,9 @@ export class GemmaService {
   }
   getIndicators(type: string = ""): Observable<IPrompts[]> {
     return this.http.get<IPrompts[]>(`${this.apiUrl}/prompts/`);
+  }
+  generateSheet(new_ : INews): Observable<{ indicator_name: string, response: string }[]> {
+    return this.http.post<{ indicator_name: string, response: string }[]>(`${this.apiUrl}/generate_sheet/`, new_);
   }
 }
 

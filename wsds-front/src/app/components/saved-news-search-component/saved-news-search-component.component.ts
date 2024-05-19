@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import {GemmaService} from '../../services/gemma.service';
+import { GemmaService } from '../../services/gemma.service';
 import { map, Observable, startWith } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { SheetModalComponent } from '../sheet-modal/sheet-modal.component';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {INews, ISavedNews, ISheet} from "../../interfaces/news.interface";
 import {IPrompts} from "../../interfaces/indicators.interface";
@@ -28,15 +30,11 @@ export class SavedNewsSearchComponentComponent {
     ['diarioelsalvador.com', './../../assets/elsalvador.png'],
   ]);
   news: ISavedNews[] | null = [];
-
-
-  constructor(private gemmaService: GemmaService, private fb: FormBuilder) {}
-
-
   get searchControl_() {
     return this.advFilters.get('searchControl') as FormControl;
   }
 
+  constructor(private gemmaService: GemmaService, private fb: FormBuilder, public dialog: MatDialog) {}
   get dateStart() {
     return this.advFilters.get('dateStart') as FormControl;
   }
@@ -49,6 +47,9 @@ export class SavedNewsSearchComponentComponent {
     return this.advFilters.get('inputs') as FormArray;
   }
   ngOnInit() {
+    this.gemmaService.getAllNews().subscribe((items) => {
+      (this.news = items)
+    });
     this.advFilters = this.fb.group({
       inputs: this.fb.array( this.indicators.map(() => this.fb.control(''))),
       searchControl: [''],
@@ -90,5 +91,19 @@ export class SavedNewsSearchComponentComponent {
     return this.options.filter((option) =>
       option.toLowerCase().includes(filterValue)
     );
+  }
+
+  openDialogModifySheet(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    newSaved: ISavedNews
+  ) {
+    this.dialog.open(SheetModalComponent, {
+      data: { newSaved },
+      width: '60vw',
+      height: '60vh',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

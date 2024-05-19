@@ -15,12 +15,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import {
-  ButtonReportComponent,
-  FichaContentDialog,
-  DialogContentFicha,
-  NewsDetailsComponent,
-} from './components/Ficha/ficha.component';
-import {
   ButtonReadComponent,
   NewsContentDialog,
   DialogContentNews,
@@ -67,6 +61,9 @@ import { RouterModule, Routes } from '@angular/router';
 import {IndicadoresComponent} from './components/Indicadores/prompt.component';
 import {NgOptimizedImage} from "@angular/common";
 import {MatSelect, MatSelectTrigger} from "@angular/material/select";
+import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
+import { MessageDialogComponent } from './components/message-dialog/message-dialog.component';
 
 
 const routes: Routes = [
@@ -95,11 +92,11 @@ const routes: Routes = [
     BannerComponent,
     NavBarComponent,
     LayoutComponent,
-    ButtonReportComponent,
     ButtonReadComponent,
-    NewsDetailsComponent,
     SavedNewsSearchComponentComponent,
-    IndicadoresComponent
+    IndicadoresComponent,
+    SheetModalComponent,
+    MessageDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -133,13 +130,14 @@ const routes: Routes = [
     MatCardContent,
     MatCardActions,
     MatCardModule,
-    DialogContentFicha,
-    FichaContentDialog,
     DialogContentNews,
     NewsContentDialog,
     NgOptimizedImage,
     MatSelect,
-    MatSelectTrigger
+    MatSelectTrigger,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle
   ],
   providers: [
     provideClientHydration(),
