@@ -51,6 +51,12 @@ export class GemmaService {
     return this.http.put<{ status: string, id: string }>(`${this.apiUrl}/sheets/`, sheet, {params});
   }
 
+  createSheet(sheet: ISheet): Observable<{ status: string, id: string }> {
+    const params = new HttpParams()
+      .set('sheet_id', sheet.id)
+    return this.http.post<{ status: string, id: string }>(`${this.apiUrl}/sheets/`, sheet);
+  }
+
   getAllNews(): Observable<ISavedNews[]> {
     return this.http.get<ISavedNews[]>(`${this.apiUrl}/news-sheet/`);
   }

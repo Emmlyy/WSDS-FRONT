@@ -1,8 +1,10 @@
 import {AfterViewInit, Component, ElementRef, Inject, QueryList, ViewChildren} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { IsheetModal } from '../../interfaces/news.interface';
-import { GemmaService } from '../../services/gemma.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {ISheet, IsheetModal} from '../../interfaces/news.interface';
+import {GemmaService} from '../../services/gemma.service';
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+
 @Component({
   selector: 'app-sheet-modal',
   templateUrl: './sheet-modal.component.html',
@@ -10,7 +12,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class SheetModalComponent  implements AfterViewInit {
   isDisabled = true; // Propiedad para controlar el estado de los inputs
-
+  isSheetSaved = false;
   constructor(
     public dialogRef: MatDialogRef<SheetModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IsheetModal,
@@ -19,7 +21,7 @@ export class SheetModalComponent  implements AfterViewInit {
   ) {}
   @ViewChildren('textarea') textAreas!: QueryList<ElementRef>;
   ngOnInit() {
-    console.log(this.data.newSaved);
+    this.isSheetSaved = this.data.newSaved.sheet !== null
   }
   adjustTextAreaHeight(event: Event) {
     const textArea = event.target as HTMLTextAreaElement;
@@ -87,5 +89,32 @@ export class SheetModalComponent  implements AfterViewInit {
     this._snackBar.open(message, action, {
       duration: 3000
     });
+  }
+
+  fillNewSheet() {
+    this.gemmaService.getIndicators().subscribe(indicators =>
+      {
+        const newIndicators: { indicator_name: string; response: string }[] = []
+        for (const item of indicators){
+          newIndicators.push({
+            indicator_name: item.indicator_name,
+            response: ""
+          })
+        }
+        this.data.newSaved.sheet = {
+          indicators: newIndicators,
+          priority: 1,
+          id: this.data.newSaved.url
+        }
+        this.isSheetSaved = true
+        this.gemmaService.createSheet(this.data.newSaved.sheet).subscribe(value => {
+          console.log(value)
+          this.openSnackBar("Ficha creada lista para ser llenada", "Cerrar")
+          this.toggleEdit()
+        }, error => {
+          this.openSnackBar("Error creando ficha", "Cerrar")
+        })
+      }
+    )
   }
 }
