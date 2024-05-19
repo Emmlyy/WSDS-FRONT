@@ -1,0 +1,8 @@
+<div>
+  <mat-form-field appearance="outline">
+    <mat-label>Indicadores Disponibles</mat-label>
+    <mat-select [(value)]="currentSetting">
+      <mat-option *ngFor="let indicatorList of indicatorsAvailable">{{ indicatorList.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

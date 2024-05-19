@@ -4,21 +4,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {DBService} from '../../services/api.dbmongo.service'
+import {IndicatorService} from '../../services/indicator.service'
 import { HttpEventType } from '@angular/common/http';
 import { v4 as uuidv4 } from 'uuid';
 
 
-interface Indicator {
-  indicator_name: string;
-  prompt: string;
-  id: string;
-}
-interface IndicatorEntry {
-  indicators: Indicator[],
-  name: string;
-  id: string;
-}
+
 
 let indicatorEntryList: IndicatorEntry[] = [];
 let indicatorEntry: IndicatorEntry = {
@@ -26,24 +17,6 @@ let indicatorEntry: IndicatorEntry = {
   name: '',
   id: ''
 };
-
-
-@Component({
-  selector: 'app-button-new-promtp',
-  templateUrl: './button-newDialog-prompt.html',
-  //styleUrls: ['./button.component.css']
-})
-export class ButtonNewPromptComponent {
-  constructor(public dialog: MatDialog) {}
-
-  openDialog() {
-    const dialogRef = this.dialog.open(NewIndicadorComponent);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-}
 
 @Component({
   selector: 'app-news-details',
@@ -54,7 +27,7 @@ export class NewIndicadorComponent  {
 
   NewIndicadorForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,private DBService: DBService) {
+  constructor(private formBuilder: FormBuilder,private DBService: IndicatorService) {
     this.NewIndicadorForm = this.formBuilder.group({
       indicator_name:  [''],
       description: ['']
@@ -101,7 +74,7 @@ export class IndicadoresComponent implements OnInit {
   //current_text: any;
   //responseArray: any [] = [];
 
-  constructor(private DBService: DBService, private fb: FormBuilder) {
+  constructor(private DBService: IndicatorService, private fb: FormBuilder, private dialog: MatDialog) {
     this.indicadoresForm = this.fb.group({});
   }
 
@@ -114,7 +87,13 @@ export class IndicadoresComponent implements OnInit {
     });
 
   }
+  openDialog() {
+    const dialogRef = this.dialog.open(NewIndicadorComponent);
 
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   // Método para habilitar/deshabilitar la edición del formulario
 
   toggleFormEdit() {
@@ -174,7 +153,7 @@ export class TabComponent implements OnInit {
   selectedTabId: string | null = null;
 
 
-  constructor(private DBService: DBService, private fb: FormBuilder) {
+  constructor(private DBService: IndicatorService, private fb: FormBuilder) {
     this.indicatorEntryForm = this.fb.group({});
   }
 
@@ -199,7 +178,7 @@ export class TabComponent implements OnInit {
 
 
   loadPrompts(): void {
-    this.DBService.searchAllPromptEntryData().subscribe(
+    this.DBService.getAllPromptEntryData().subscribe(
       event => {
         if (event.type === HttpEventType.Response) {
           this.loaderInServices = false;

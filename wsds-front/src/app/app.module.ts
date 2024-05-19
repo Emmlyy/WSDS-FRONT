@@ -63,20 +63,20 @@ import {MatSelect, MatSelectTrigger} from "@angular/material/select";
 import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
 import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import { MessageDialogComponent } from './components/message-dialog/message-dialog.component';
-import {IndicadoresComponent, ButtonNewPromptComponent, NewIndicadorComponent, TabComponent} from './components/Indicadores/prompt.component';
 import {MatDialogModule } from '@angular/material/dialog';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import {NewsDetailsComponent} from "./components/Ficha/ficha.component";
+import { IndicatorsComponent } from './components/indicators/indicators.component';
+import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
+
 
 
 const routes: Routes = [
   {
-    path: 'Noticias-Guardadas',
+    path: 'archivo',
     component: SavedNewsSearchComponentComponent,
   },
   {
-    path: 'Buscar-Noticias',
+    path: 'busqueda',
     component: SearchComponent,
   },
   {
@@ -84,8 +84,8 @@ const routes: Routes = [
     component: SearchComponent,
   },
   {
-    path: 'Indicadores',
-    component: IndicadoresComponent,
+    path: 'indicadores',
+    component: IndicatorsComponent,
   }
 ];
 
@@ -97,15 +97,11 @@ const routes: Routes = [
     NavBarComponent,
     LayoutComponent,
     ButtonReadComponent,
-    ButtonNewPromptComponent,
-    NewsDetailsComponent,
     SavedNewsSearchComponentComponent,
-    IndicadoresComponent,
-    NewIndicadorComponent,
-    TabComponent,
-    IndicadoresComponent,
     SheetModalComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
+    IndicatorsComponent,
+    IndicatorModalComponent
   ],
   imports: [
     BrowserModule,
@@ -142,7 +138,6 @@ const routes: Routes = [
     MatCardContent,
     MatCardActions,
     MatCardModule,
-    FichaContentDialog,
     DialogContentNews,
     NewsContentDialog,
     NgOptimizedImage,
@@ -150,10 +145,7 @@ const routes: Routes = [
     MatSelectTrigger,
     MatDialogActions,
     MatDialogContent,
-    MatDialogTitle
-    DialogContentFicha
-
-
+    MatDialogTitle,
   ],
   providers: [
     provideClientHydration(),
