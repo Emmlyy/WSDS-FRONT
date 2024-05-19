@@ -8,7 +8,7 @@
     </mat-form-field>
   </div>
 
-  <div class="container">
+  <form [formGroup] = "indicatorForm" class="container">
     <div class="d-flex justify-content-between">
       <div class="d-flex flex-column justify-content-center">
         <h2 class="p-0 m-0">Indicadores activos para: {{ currentIndicators?.name }}</h2>
@@ -23,11 +23,11 @@
       </div>
     </div>
     <div>
-      <div>
-        <div *ngFor="let indicator of currentIndicators?.indicators" class="row">
+      <div formArrayName="inputs">
+        <div *ngFor="let control of indicatorsForm.controls; let i = index" class="row">
           <mat-form-field appearance="outline" class="form-field full-width m-1">
-            <mat-label>{{ indicator.indicator_name }}</mat-label>
-            <input matInput placeholder="{{ indicator.prompt }}" class="input-field" />
+            <mat-label>{{ currentIndicators.indicators[i].indicator_name }}</mat-label>
+            <input [formControlName]="i" matInput [placeholder]="currentIndicators.indicators[i].indicator_name" placeholder="{{ currentIndicators.indicators[i].prompt }}" class="input-field" />
           </mat-form-field>
         </div>
       </div>
@@ -35,5 +35,5 @@
         Editar
       </button>
     </div>
-  </div>
+  </form>
 </div>

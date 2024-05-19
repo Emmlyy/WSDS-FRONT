@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IndicatorService} from "../../services/indicator.service";
 import {IIndicator, IIndicatorEntry} from "../../interfaces/indicators.interface";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-indicators',
@@ -9,25 +10,59 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
   styleUrl: './indicators.component.scss'
 })
 export class IndicatorsComponent {
+  isEditModeEnable: boolean = false;
   currentSetting: string = "202405-1622-2128-85e71527-8fbf-4889-baa1-3ff5ad6194ec";
-  constructor(private indicatorService: IndicatorService) {
-  }
   indicatorsAvailable: IIndicatorEntry[] = []
-  currentIndicators!: IIndicatorEntry | undefined;
+  currentIndicators!: IIndicatorEntry;
+  indicatorForm!: FormGroup;
+
+  constructor(private indicatorService: IndicatorService, private fb: FormBuilder) {
+  }
+
+  get indicatorsForm() {
+    return this.indicatorForm.get('inputs') as FormArray;
+  }
+
+
   ngOnInit(){
+    this.indicatorForm = this.fb.group({
+      inputs:  new FormArray([]),
+    });
     this.indicatorService.getAllPromptEntryData().subscribe(items => {
       console.log(items)
       this.indicatorsAvailable = items;
+
       this.currentIndicators =  this.indicatorsAvailable.find(element =>
-        element.id == this.currentSetting)
+        element.id == this.currentSetting) ?? {
+        indicators: [],
+        id: "",
+        name: ""
+      }
+      if (this.currentIndicators){
+        this.indicatorsForm.clear()
+        this.indicatorForm.setControl("inputs", this.fb.array( this.currentIndicators.indicators.map((value) => this.fb.control(value.prompt))))
+      }
+      console.log(this.indicatorsForm.controls)
     }, error => {
       console.log(error)
     })
+
   }
 
   changeSetting() {
     console.log(this.currentSetting)
     this.currentIndicators =  this.indicatorsAvailable.find(element =>
-      element.id == this.currentSetting)
+      element.id == this.currentSetting) ?? {
+      indicators: [],
+      id: "",
+      name: ""
+    }
+    console.log(this.currentIndicators)
+    this.indicatorsForm.clear()
+    this.indicatorForm.setControl("inputs", this.fb.array( this.currentIndicators.indicators.map((value) => this.fb.control(value.prompt))))
   }
+
+  /*toggleFormEdit() {
+    this.isEditModeEnable ? this.indicadoresForm.disable() : this.indicadoresForm.enable();
+  }*/
 }
