@@ -55,6 +55,6 @@
     <button mat-flat-button color="warn" *ngIf="!isDisabled" (click)="cancelEdit()">Cancelar</button>
   </ng-container>
   <ng-container *ngIf="!isSheetSaved" >
-    <button mat-flat-button (click)="onCancel()">Cerrar</button>
+    <button mat-flat-button  cdkFocusInitial (click)="onCancel()">Cerrar</button>
   </ng-container>
 </mat-dialog-actions>
