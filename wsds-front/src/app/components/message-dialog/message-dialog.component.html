@@ -3,5 +3,6 @@
   {{data.message}}
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-flat-button (click)="onNoClick()" mat-dialog-close cdkFocusInitial>{{data.action}}</button>
+  <button mat-flat-button (click)="onYesClick()" color="primary" mat-dialog-close cdkFocusInitial>{{data.action}}</button>
+  <button mat-flat-button (click)="onNoClick()" mat-dialog-close cdkFocusInitial>Cerrar</button>
 </mat-dialog-actions>

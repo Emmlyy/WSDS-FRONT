@@ -18,11 +18,16 @@
           <button mat-raised-button color="primary"
                   class="Add-button" (click)="changeSettingName()">Cambiar nombre</button>
           <button mat-raised-button color="primary"
-                  class="Add-button" (click)="createSetting()">Nuevo indicador</button>
+                  class="Add-button" (click)="createSetting()">Nueva Configuración</button>
+          <button mat-raised-button color="warn"
+                  class="Add-button" *ngIf="indicatorsAvailable.length > 1" (click)="deleteSetting()">Eliminar configuración</button>
         </div>
       </div>
     </div>
     <div>
+      <button mat-raised-button color="primary" class="edit-button w-100 mb-3">
+        Crear indicador
+      </button>
       <div formArrayName="inputs">
         <div *ngFor="let control of indicatorsForm.controls; let i = index" class="row">
           <mat-form-field appearance="outline" class="form-field full-width m-1">
@@ -31,7 +36,8 @@
           </mat-form-field>
         </div>
       </div>
-      <button mat-raised-button color="primary" class="edit-button w-100" >
+
+      <button mat-raised-button color="primary" class="edit-button w-100" *ngIf="indicatorsForm.controls.length >= 1">
         Editar
       </button>
     </div>

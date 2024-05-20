@@ -67,6 +67,7 @@ import {MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { IndicatorsComponent } from './components/indicators/indicators.component';
 import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
+import { CreateIndicatorModalComponent } from './create-indicator-modal/create-indicator-modal.component';
 
 
 
@@ -101,7 +102,8 @@ const routes: Routes = [
     SheetModalComponent,
     MessageDialogComponent,
     IndicatorsComponent,
-    IndicatorModalComponent
+    IndicatorModalComponent,
+    CreateIndicatorModalComponent
   ],
   imports: [
     BrowserModule,

@@ -36,6 +36,18 @@ export class IndicatorService {
     const urlWithQuery = `${this.apiUrl}/promptsEntry/`;
     return this.http.post<{ message: string }>(urlWithQuery, entry);
   }
+  deleteEntry(entryId: string): Observable<{ message: string }> {
+    const urlWithQuery = `${this.apiUrl}/promptsEntry/${entryId}`;
+    return this.http.delete<{ message: string }>(urlWithQuery);
+  }
+  getCurrentSetting(): Observable<{ value: string }> {
+    const urlWithQuery = `${this.apiUrl}/global_id/`;
+    return this.http.get<{ value: string }>(urlWithQuery);
+  }
+  updateSetting(id: string): Observable<{ message: string }> {
+    const urlWithQuery = `${this.apiUrl}/update_global/${id}`;
+    return this.http.put<{ message: string }>(urlWithQuery, {});
+  }
 }
 
 
