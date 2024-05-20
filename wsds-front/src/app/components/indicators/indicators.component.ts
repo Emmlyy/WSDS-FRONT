@@ -30,6 +30,10 @@ export class IndicatorsComponent {
     this.indicatorForm = this.fb.group({
       inputs:  new FormArray([]),
     });
+    this.getAllSettings()
+
+  }
+  getAllSettings(){
     this.indicatorService.getAllPromptEntryData().subscribe(items => {
       console.log(items)
       this.indicatorsAvailable = items;
@@ -48,9 +52,7 @@ export class IndicatorsComponent {
     }, error => {
       console.log(error)
     })
-
   }
-
   changeSetting() {
     console.log(this.currentSetting)
     this.currentIndicators =  this.indicatorsAvailable.find(element =>
@@ -68,8 +70,22 @@ export class IndicatorsComponent {
     this.isEditModeEnable ? this.indicadoresForm.disable() : this.indicadoresForm.enable();
   }*/
   changeSettingName() {
-    this.dialog.open(IndicatorModalComponent, {
+    const dialogRef  = this.dialog.open(IndicatorModalComponent, {
       data: {setting: this.currentIndicators, isCreate: false},
+      width: '600px'
     })
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllSettings()
+    });
+  }
+
+  createSetting() {
+    const dialogRef  = this.dialog.open(IndicatorModalComponent, {
+      data: {setting: {}, isCreate: true},
+      width: '600px'
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllSettings()
+    });
   }
 }

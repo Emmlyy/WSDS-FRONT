@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {INews, ISavedNews, ISheet, IsheetModal} from "../interfaces/news.interface";
 import {IPrompts} from "../interfaces/indicators.interface";
+import {formatDate} from "../utils/utils";
 
 @Injectable({
   providedIn: 'root',
@@ -76,15 +77,3 @@ export class GemmaService {
   }
 }
 
-const formatDate = (fecha: string) => {
-  if (fecha === ""){
-    return ""
-  }
-  const dateObj: Date = new Date(fecha);
-
-  const year: number = dateObj.getFullYear();
-  const month: number = dateObj.getMonth() + 1;
-  const day: number = dateObj.getDate();
-  const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-  return formattedDate;
-}

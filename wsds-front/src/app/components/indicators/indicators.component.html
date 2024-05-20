@@ -1,6 +1,6 @@
 <div>
   <div class="container d-flex justify-content-end mt-4">
-    <mat-form-field appearance="outline">
+    <mat-form-field class="setting-select" appearance="outline">
       <mat-label>Indicador Activo</mat-label>
       <mat-select (selectionChange)="changeSetting()" [(value)]="currentSetting">
         <mat-option *ngFor="let indicatorList of indicatorsAvailable" [value]="indicatorList.id">{{ indicatorList.name }}</mat-option>
@@ -18,7 +18,7 @@
           <button mat-raised-button color="primary"
                   class="Add-button" (click)="changeSettingName()">Cambiar nombre</button>
           <button mat-raised-button color="primary"
-                  class="Add-button">Nuevo indicador</button>
+                  class="Add-button" (click)="createSetting()">Nuevo indicador</button>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import {IIndicatorEntry} from "../../interfaces/indicators.interface";
 import {Form, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {IndicatorService} from "../../services/indicator.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {generateObjectId} from "../../utils/utils";
 
 @Component({
   selector: 'app-indicator-modal',
@@ -25,7 +26,18 @@ export class IndicatorModalComponent {
 
   saveForm() {
     if (this.data.isCreate && this.settingForm.valid){
-
+      const name = this.settingForm.value
+      const newEntry : IIndicatorEntry= {
+        ...name,
+        id: generateObjectId(),
+        indicators: []
+      }
+      this.indicatorService.createEntry(newEntry).subscribe(value => {
+        this._snackBar.open("Cambios realizados con exito", "Cerrar", {
+          duration: 3000
+        });
+        this.dialogRef.close();
+      }, error => console.log(error))
     }
     else if (this.settingForm.valid){
       const name = this.settingForm.value

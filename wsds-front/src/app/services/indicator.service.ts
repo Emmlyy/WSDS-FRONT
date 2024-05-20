@@ -32,6 +32,10 @@ export class IndicatorService {
     const urlWithQuery = `${this.apiUrl}/promptsEntry/${entryId}`;
     return this.http.put<{ message: string }>(urlWithQuery, entry);
   }
+  createEntry(entry: IIndicatorEntry): Observable<{ message: string }> {
+    const urlWithQuery = `${this.apiUrl}/promptsEntry/`;
+    return this.http.post<{ message: string }>(urlWithQuery, entry);
+  }
 }
 
 
