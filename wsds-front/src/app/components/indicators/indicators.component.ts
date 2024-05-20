@@ -27,11 +27,15 @@ export class IndicatorsComponent {
   get indicatorsForm() {
     return this.indicatorForm.get('inputs') as FormArray;
   }
+  get namesForm() {
+    return this.indicatorForm.get('names') as FormArray;
+  }
 
 
   ngOnInit(){
     this.indicatorForm = this.fb.group({
       inputs:  new FormArray([]),
+      names:  new FormArray([]),
     });
     this.getAllSettings()
 
@@ -49,7 +53,9 @@ export class IndicatorsComponent {
         }
         if (this.currentIndicators){
           this.indicatorsForm.clear()
+          this.namesForm.clear()
           this.indicatorForm.setControl("inputs", this.fb.array( this.currentIndicators.indicators.map((value) => this.fb.control(value.prompt))))
+          this.indicatorForm.setControl("names", this.fb.array( this.currentIndicators.indicators.map((value) => this.fb.control(value.indicator_name))))
         }
         console.log(this.indicatorsForm.controls)
       })
@@ -72,7 +78,9 @@ export class IndicatorsComponent {
     })
     console.log(this.currentIndicators)
     this.indicatorsForm.clear()
+    this.namesForm.clear()
     this.indicatorForm.setControl("inputs", this.fb.array( this.currentIndicators.indicators.map((value) => this.fb.control(value.prompt))))
+    this.indicatorForm.setControl("names", this.fb.array( this.currentIndicators.indicators.map((value) => this.fb.control(value.indicator_name))))
   }
 
   /*toggleFormEdit() {
@@ -123,5 +131,44 @@ export class IndicatorsComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.getAllSettings()
     });
+  }
+
+  toggleEditMode() {
+    if (this.isEditModeEnable){
+      const inputValue = this.indicatorsForm.value
+      const nameValue = this.namesForm.value
+      console.log(inputValue)
+      const listOfNewIndicators: IIndicator[] = []
+      for (const [index, element] of inputValue.entries()) {
+        listOfNewIndicators.push({
+          indicator_name: nameValue[index],
+          prompt: element,
+          id: this.currentIndicators.indicators[index].id,
+        })
+      }
+      const newEntry: IIndicatorEntry = {
+        id: this.currentIndicators.id,
+        indicators: listOfNewIndicators,
+        name: this.currentIndicators.name
+      }
+      this.indicatorService.updateEntry(newEntry.id, newEntry).subscribe(value => {
+        this._snackBar.open("Cambios realizados con exito", "Cerrar", {
+          duration: 3000
+        });
+        this.getAllSettings()
+      }, error => console.log(error))
+    }
+    this.isEditModeEnable = !this.isEditModeEnable
+  }
+
+  deleteIndicator(i: number) {
+    const newEntry = JSON.parse(JSON.stringify(this.currentIndicators));
+    newEntry.indicators.splice(i,1);
+    this.indicatorService.updateEntry(newEntry.id, newEntry).subscribe(value => {
+      this._snackBar.open("Cambios realizados con exito", "Cerrar", {
+        duration: 3000
+      });
+      this.getAllSettings()
+    }, error => console.log(error))
   }
 }

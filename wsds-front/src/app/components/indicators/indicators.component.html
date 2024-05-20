@@ -8,38 +8,48 @@
     </mat-form-field>
   </div>
 
-  <form [formGroup] = "indicatorForm" class="container">
+  <form [formGroup]="indicatorForm" class="container">
     <div class="d-flex justify-content-between">
       <div class="d-flex flex-column justify-content-center">
         <h2 class="p-0 m-0">Indicadores activos para: {{ currentIndicators?.name }}</h2>
       </div>
       <div class="row justify-content-end mb-3 mt-3">
         <div class="d-flex gap-2">
-          <button mat-raised-button color="primary"
-                  class="Add-button" (click)="changeSettingName()">Cambiar nombre</button>
-          <button mat-raised-button color="primary"
-                  class="Add-button" (click)="createSetting()">Nueva Configuración</button>
-          <button mat-raised-button color="warn"
-                  class="Add-button" *ngIf="indicatorsAvailable.length > 1" (click)="deleteSetting()">Eliminar configuración</button>
+          <button mat-raised-button color="primary" class="Add-button" (click)="changeSettingName()">Cambiar nombre</button>
+          <button mat-raised-button color="primary" class="Add-button" (click)="createSetting()">Nueva Configuración</button>
+          <button mat-raised-button color="warn" class="Add-button" *ngIf="indicatorsAvailable.length > 1" (click)="deleteSetting()">Eliminar configuración</button>
         </div>
       </div>
     </div>
-    <div>
-      <button mat-raised-button color="primary" class="edit-button w-100 mb-3" (click)="createIndicator()">
-        Crear indicador
-      </button>
-      <div formArrayName="inputs">
-        <div *ngFor="let control of indicatorsForm.controls; let i = index" class="row">
-          <mat-form-field appearance="outline" class="form-field full-width m-1">
-            <mat-label>{{ currentIndicators.indicators[i].indicator_name }}</mat-label>
-            <input [formControlName]="i" matInput [placeholder]="currentIndicators.indicators[i].indicator_name" placeholder="{{ currentIndicators.indicators[i].prompt }}" class="input-field" />
-          </mat-form-field>
-        </div>
-      </div>
 
-      <button mat-raised-button color="primary" class="edit-button w-100" *ngIf="indicatorsForm.controls.length >= 1">
-        Editar
-      </button>
-    </div>
+    <button mat-raised-button color="primary" class="edit-button w-100 mb-3" (click)="createIndicator()">Crear indicador</button>
+
+   <div class="d-flex gap-2">
+     <div formArrayName="names" class="w-25">
+       <div *ngFor="let control of namesForm.controls; let i = index">
+         <mat-form-field appearance="outline" class="form-field full-width m-1 w-100">
+           <mat-label>Nombre del indicador</mat-label>
+           <input [readonly]="!isEditModeEnable" [formControlName]="i" matInput [placeholder]="currentIndicators.indicators[i].indicator_name" class="input-field" />
+         </mat-form-field>
+       </div>
+     </div>
+
+     <div formArrayName="inputs" class="w-75">
+       <div *ngFor="let control of indicatorsForm.controls; let i = index" class="row">
+         <div class="w-100 d-flex justify-content-center">
+           <mat-form-field appearance="outline" class="form-field full-width m-1 w-100">
+             <mat-label>Prompt</mat-label>
+             <input [readonly]="!isEditModeEnable" [formControlName]="i" matInput [placeholder]="currentIndicators.indicators[i].prompt" class="input-field" />
+           </mat-form-field>
+           <button mat-fab color="warn" class="mt-1" style="height: 56px; border-radius: 4px" (click)="deleteIndicator(i)"><mat-icon aria-hidden="false" class="m-0" fontIcon="close"></mat-icon>
+           </button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+    <button mat-raised-button color="primary" class="edit-button w-100" *ngIf="indicatorsForm.controls.length >= 1" (click)="toggleEditMode()">
+      {{ isEditModeEnable ? 'Guardar' : 'Editar' }}
+    </button>
   </form>
 </div>
