@@ -58,21 +58,26 @@ import {
 import { HttpConfigInterceptor } from './interceptor/http-config.interceptor';
 import { SavedNewsSearchComponentComponent } from './components/saved-news-search-component/saved-news-search-component.component';
 import { RouterModule, Routes } from '@angular/router';
-import {IndicadoresComponent} from './components/Indicadores/prompt.component';
 import {NgOptimizedImage} from "@angular/common";
 import {MatSelect, MatSelectTrigger} from "@angular/material/select";
 import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
 import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import { MessageDialogComponent } from './components/message-dialog/message-dialog.component';
+import {MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { IndicatorsComponent } from './components/indicators/indicators.component';
+import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
+import { CreateIndicatorModalComponent } from './components/create-indicator-modal/create-indicator-modal.component';
+
 
 
 const routes: Routes = [
   {
-    path: 'Noticias-Guardadas',
+    path: 'archivo',
     component: SavedNewsSearchComponentComponent,
   },
   {
-    path: 'Buscar-Noticias',
+    path: 'busqueda',
     component: SearchComponent,
   },
   {
@@ -80,8 +85,8 @@ const routes: Routes = [
     component: SearchComponent,
   },
   {
-    path: 'Indicadores',
-    component: IndicadoresComponent,
+    path: 'indicadores',
+    component: IndicatorsComponent,
   }
 ];
 
@@ -94,19 +99,24 @@ const routes: Routes = [
     LayoutComponent,
     ButtonReadComponent,
     SavedNewsSearchComponentComponent,
-    IndicadoresComponent,
     SheetModalComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
+    IndicatorsComponent,
+    IndicatorModalComponent,
+    CreateIndicatorModalComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    BrowserModule,
+    MatTabsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     MatButtonModule,
     NgbModule,
     MatFormField,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatIcon,
@@ -137,7 +147,7 @@ const routes: Routes = [
     MatSelectTrigger,
     MatDialogActions,
     MatDialogContent,
-    MatDialogTitle
+    MatDialogTitle,
   ],
   providers: [
     provideClientHydration(),

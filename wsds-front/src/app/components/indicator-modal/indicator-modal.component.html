@@ -1,0 +1,14 @@
+<h2 mat-dialog-title class="m-0">{{data.isCreate ? "Crear configuración" : "Modificar configuración"}}</h2>
+<hr>
+<mat-dialog-content>
+  <form [formGroup]="settingForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" (click)="saveForm()">{{ data.isCreate ? "Crear":"Guardar"}}</button>
+  <button mat-flat-button mat-dialog-close cdkFocusInitial>Cerrar</button>
+</mat-dialog-actions>
