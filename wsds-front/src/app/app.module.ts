@@ -67,7 +67,7 @@ import {MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { IndicatorsComponent } from './components/indicators/indicators.component';
 import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
-import { CreateIndicatorModalComponent } from './create-indicator-modal/create-indicator-modal.component';
+import { CreateIndicatorModalComponent } from './components/create-indicator-modal/create-indicator-modal.component';
 
 
 

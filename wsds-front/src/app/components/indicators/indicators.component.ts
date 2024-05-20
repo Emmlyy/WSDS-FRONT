@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {IndicatorModalComponent} from "../indicator-modal/indicator-modal.component";
 import {MessageDialogComponent} from "../message-dialog/message-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {CreateIndicatorModalComponent} from "../create-indicator-modal/create-indicator-modal.component";
 
 @Component({
   selector: 'app-indicators',
@@ -111,6 +112,16 @@ export class IndicatorsComponent {
           this.getAllSettings()
         })
       }
+    });
+  }
+
+  createIndicator() {
+    const dialogRef  = this.dialog.open(CreateIndicatorModalComponent, {
+      data: {setting: this.currentIndicators, isCreate: true},
+      width: '600px'
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllSettings()
     });
   }
 }
