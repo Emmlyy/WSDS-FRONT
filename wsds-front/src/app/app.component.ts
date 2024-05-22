@@ -11,11 +11,18 @@ import { map } from 'rxjs/operators';
 export class AppComponent {
   title = 'wsds-front';
   loading = this.loaderService.isLoading;
-  messages = ['Buscando noticias...'];
+  currentMessage = ""
+  /*messages = ['Buscando noticias...'];
   currentMessage$ = interval(3000).pipe(
     map(i => this.messages[i % this.messages.length])
-  );
+  );*/
   constructor(private loaderService: LoaderService, private cdref: ChangeDetectorRef) {}
+
+  ngOnInit(){
+    this.loaderService.message.subscribe(val =>{
+      this.currentMessage = val
+    })
+  }
   ngAfterContentChecked() {
     this.cdref.detectChanges();
   }

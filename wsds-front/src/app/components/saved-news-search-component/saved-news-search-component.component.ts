@@ -47,20 +47,19 @@ export class SavedNewsSearchComponentComponent {
     return this.advFilters.get('inputs') as FormArray;
   }
   ngOnInit() {
-    this.gemmaService.getAllNews().subscribe((items) => {
-      (this.news = items)
-    });
     this.advFilters = this.fb.group({
       inputs: this.fb.array( this.indicators.map(() => this.fb.control(''))),
       searchControl: [''],
       dateStart: [''],
       dateEnd: [''],
     });
-    this.gemmaService.getAllNews().subscribe(items => this.news = (items))
-    this.gemmaService.getIndicators().subscribe(items => {
-      this.indicators = (items)
-      console.log(this.indicators)
-      this.advFilters.setControl("inputs", this.fb.array( this.indicators.map(() => this.fb.control(''))))
+    this.gemmaService.getAllNews().subscribe(items => {
+      this.news = (items)
+      this.gemmaService.getIndicators().subscribe(items => {
+        this.indicators = (items)
+        console.log(this.indicators)
+        this.advFilters.setControl("inputs", this.fb.array( this.indicators.map(() => this.fb.control(''))))
+      })
     })
   }
 

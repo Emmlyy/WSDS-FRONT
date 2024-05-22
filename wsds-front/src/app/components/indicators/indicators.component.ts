@@ -171,4 +171,19 @@ export class IndicatorsComponent {
       this.getAllSettings()
     }, error => console.log(error))
   }
+
+  getReport() {
+    this.indicatorService.downloadReport().subscribe(response => {
+      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'reporte.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }, error => {
+      console.error('Download error:', error);
+    });
+  }
 }
