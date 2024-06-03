@@ -14,11 +14,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import {
-  ButtonReadComponent,
-  NewsContentDialog,
-  DialogContentNews,
-} from './components/News/news.component';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatFormField,
@@ -68,6 +63,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { IndicatorsComponent } from './components/indicators/indicators.component';
 import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
 import { CreateIndicatorModalComponent } from './components/create-indicator-modal/create-indicator-modal.component';
+import { ReadNewComponent } from './components/read-new/read-new.component';
 
 
 
@@ -97,13 +93,13 @@ const routes: Routes = [
     BannerComponent,
     NavBarComponent,
     LayoutComponent,
-    ButtonReadComponent,
     SavedNewsSearchComponentComponent,
     SheetModalComponent,
     MessageDialogComponent,
     IndicatorsComponent,
     IndicatorModalComponent,
-    CreateIndicatorModalComponent
+    CreateIndicatorModalComponent,
+    ReadNewComponent
   ],
   imports: [
     BrowserModule,
@@ -140,8 +136,6 @@ const routes: Routes = [
     MatCardContent,
     MatCardActions,
     MatCardModule,
-    DialogContentNews,
-    NewsContentDialog,
     NgOptimizedImage,
     MatSelect,
     MatSelectTrigger,

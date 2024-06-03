@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {interval, Observable} from 'rxjs';
-import {INews, ISavedNews, ISheet, IsheetModal} from "../interfaces/news.interface";
+import {INews, ISavedNews, ISheet, ISheetModal} from "../interfaces/news.interface";
 import {IPrompts} from "../interfaces/indicators.interface";
 import {formatDate} from "../utils/utils";
 import {LoaderService} from "./loader.service";

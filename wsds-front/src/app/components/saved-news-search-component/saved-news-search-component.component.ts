@@ -6,6 +6,7 @@ import { SheetModalComponent } from '../sheet-modal/sheet-modal.component';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {INews, ISavedNews, ISheet} from "../../interfaces/news.interface";
 import {IPrompts} from "../../interfaces/indicators.interface";
+import {ReadNewComponent} from "../read-new/read-new.component";
 @Component({
   selector: 'app-saved-news-search-component',
   templateUrl: './saved-news-search-component.component.html',
@@ -98,6 +99,19 @@ export class SavedNewsSearchComponentComponent {
     newSaved: ISavedNews
   ) {
     this.dialog.open(SheetModalComponent, {
+      data: { newSaved },
+      width: '60vw',
+      height: '60vh',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+  openDialogReadNew(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    newSaved: ISavedNews
+  ) {
+    this.dialog.open(ReadNewComponent, {
       data: { newSaved },
       width: '60vw',
       height: '60vh',

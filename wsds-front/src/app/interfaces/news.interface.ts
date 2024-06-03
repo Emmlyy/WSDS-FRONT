@@ -12,7 +12,7 @@ export interface INewUrl {
   url: string;
 }
 
-export interface IsheetModal {
+export interface ISheetModal {
   newSaved: ISavedNews;
 }
 

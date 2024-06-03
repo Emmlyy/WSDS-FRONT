@@ -125,7 +125,7 @@
           </span>
         </mat-card-content>
         <mat-card-actions class="mt-auto">
-          <app-button-read></app-button-read>
+          <button (click)="openDialogReadNew('0ms', '0ms', new)" mat-flat-button>Leer</button>
           <button (click)="openDialogModifySheet('0ms', '0ms', new)" mat-flat-button>Reporte</button>
           <a href="{{ new.url }}" target="_blank" class="ml-auto">
             <img

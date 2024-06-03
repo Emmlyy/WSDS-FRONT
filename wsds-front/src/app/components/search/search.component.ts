@@ -125,6 +125,20 @@ export class SearchComponent implements OnInit {
   changeDepartments($event: Event) {
     console.log(this.departmentsControl.value);
   }
+
+  openDialogReadNew(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    newSaved: ISavedNews
+  ) {
+    this.dialog.open(SheetModalComponent, {
+      data: { newSaved },
+      width: '60vw',
+      height: '60vh',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
 }
 
 /*

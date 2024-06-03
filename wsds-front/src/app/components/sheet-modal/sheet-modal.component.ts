@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Inject, QueryList, ViewChildren} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {ISheet, IsheetModal} from '../../interfaces/news.interface';
+import {ISheet, ISheetModal} from '../../interfaces/news.interface';
 import {GemmaService} from '../../services/gemma.service';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {error} from "@angular/compiler-cli/src/transformers/util";
@@ -15,7 +15,7 @@ export class SheetModalComponent  implements AfterViewInit {
   isSheetSaved = false;
   constructor(
     public dialogRef: MatDialogRef<SheetModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IsheetModal,
+    @Inject(MAT_DIALOG_DATA) public data: ISheetModal,
     private gemmaService: GemmaService,
     private _snackBar: MatSnackBar
   ) {}
