@@ -1,9 +1,8 @@
 name: "Push DEV Docker"
 
 on:
-  pull_request:
+  push:
     branches: ["main"]
-    types: [synchronize, opened, reopened]
 
 jobs:
   build-and-push-image:
