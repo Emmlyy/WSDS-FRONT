@@ -1,9 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import {INews, ISavedNews, ISheet, IsheetModal} from "../interfaces/news.interface";
+import {interval, Observable} from 'rxjs';
+import {INews, ISavedNews, ISheet, ISheetModal} from "../interfaces/news.interface";
 import {IPrompts} from "../interfaces/indicators.interface";
 import {formatDate} from "../utils/utils";
+import {LoaderService} from "./loader.service";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +17,17 @@ export class GemmaService {
   private apiUrl = 'http://127.0.0.1:8000';
   // http://127.0.0.1:8000/global
   //http://localhost:3000
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private loaderService: LoaderService) {}
 
   searchData(search: string, date_start: string, date_end: string, performance: string): Observable<any> {
+    /*
+  currentMessage$ =
+  );*/
+    const messages = ['Buscando noticias...', 'Extrayendo noticias...', "Guardando noticias..."];
+    const value = interval(3000).pipe(
+      map(i => messages[i % messages.length]))
+    value.subscribe(val => this.loaderService.setMessage(val))
+
     const params = new HttpParams()
       .set('search', search)
       .set('date_start', formatDate(date_start))
@@ -59,6 +69,7 @@ export class GemmaService {
   }
 
   getAllNews(): Observable<ISavedNews[]> {
+    this.loaderService.setMessage("Buscando en la base de datos...")
     return this.http.get<ISavedNews[]>(`${this.apiUrl}/news-sheet/`);
   }
   getFilteredNews(search_word: string = "", filters_sheet: ISheet | null = null, date_start: string = "", date_end: string = ""): Observable<ISavedNews[]> {

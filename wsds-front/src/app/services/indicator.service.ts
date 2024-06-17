@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {interval, Observable} from 'rxjs';
 import {IIndicatorEntry} from "../interfaces/indicators.interface";
+import {map} from "rxjs/operators";
+import {LoaderService} from "./loader.service";
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,7 @@ export class IndicatorService {
   private apiUrl = 'http://localhost:8000';
   // localhost:8000/prompts/
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private loaderService: LoaderService) {}
   searchAllPromptData(): Observable<any> {
     const urlWithQuery = `${this.apiUrl}/prompts`;
     return this.http.get(urlWithQuery);
@@ -47,6 +49,17 @@ export class IndicatorService {
   updateSetting(id: string): Observable<{ message: string }> {
     const urlWithQuery = `${this.apiUrl}/update_global/${id}`;
     return this.http.put<{ message: string }>(urlWithQuery, {});
+  }
+  downloadReport(): Observable<Blob> {
+    const messages = ['Buscando noticias...', "Consultando datos de archivo...", ' Generando reporte...'];
+    const value = interval(3000).pipe(
+      map(i => messages[i % messages.length]))
+    value.subscribe(val => this.loaderService.setMessage(val))
+    this.loaderService.setMessage("Generando reporte...")
+    const urlWithQuery = `${this.apiUrl}/report/`;
+    return this.http.get(urlWithQuery, {
+      responseType: 'blob'
+    });
   }
 }
 

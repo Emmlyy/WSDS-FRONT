@@ -7,18 +7,13 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
-import { BannerComponent } from './components/Banner/banner.component';
+import { BannerComponent } from './components/banner/banner.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import {
-  ButtonReadComponent,
-  NewsContentDialog,
-  DialogContentNews,
-} from './components/News/news.component';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatFormField,
@@ -68,6 +63,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { IndicatorsComponent } from './components/indicators/indicators.component';
 import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
 import { CreateIndicatorModalComponent } from './components/create-indicator-modal/create-indicator-modal.component';
+import { ReadNewComponent } from './components/read-new/read-new.component';
+import { InstructionsComponent } from './components/instructions/instructions.component';
+import {PdfViewerModule} from "ng2-pdf-viewer";
+import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 
 
 
@@ -87,6 +86,14 @@ const routes: Routes = [
   {
     path: 'indicadores',
     component: IndicatorsComponent,
+  },
+  {
+    path: 'acerca-de',
+    component: BannerComponent,
+  },
+  {
+    path: 'instrucciones',
+    component: InstructionsComponent,
   }
 ];
 
@@ -97,13 +104,14 @@ const routes: Routes = [
     BannerComponent,
     NavBarComponent,
     LayoutComponent,
-    ButtonReadComponent,
     SavedNewsSearchComponentComponent,
     SheetModalComponent,
     MessageDialogComponent,
     IndicatorsComponent,
     IndicatorModalComponent,
-    CreateIndicatorModalComponent
+    CreateIndicatorModalComponent,
+    ReadNewComponent,
+    InstructionsComponent
   ],
   imports: [
     BrowserModule,
@@ -140,14 +148,13 @@ const routes: Routes = [
     MatCardContent,
     MatCardActions,
     MatCardModule,
-    DialogContentNews,
-    NewsContentDialog,
     NgOptimizedImage,
     MatSelect,
     MatSelectTrigger,
     MatDialogActions,
     MatDialogContent,
     MatDialogTitle,
+    NgxExtendedPdfViewerModule,
   ],
   providers: [
     provideClientHydration(),

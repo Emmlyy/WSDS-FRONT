@@ -20,6 +20,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
       }),
       finalize(() => {
         this.loaderService.hide();
+        this.loaderService.setMessage("")
       })
     );
   }

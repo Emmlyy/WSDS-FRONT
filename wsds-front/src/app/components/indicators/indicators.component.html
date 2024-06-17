@@ -1,5 +1,8 @@
 <div>
-  <div class="container d-flex justify-content-end mt-4">
+  <div class="container d-flex justify-content-end mt-4 gap-2">
+    <button mat-raised-button color="primary" style="background-color: #338000; height: 56px;" (click)="getReport()">Reporte
+      <img src="https://img.icons8.com/?size=100&id=85417&format=png&color=ffffff" width="25px">
+    </button>
     <mat-form-field class="setting-select" appearance="outline">
       <mat-label>Indicador Activo</mat-label>
       <mat-select (selectionChange)="changeSetting()" [(value)]="currentSetting">
@@ -15,9 +18,9 @@
       </div>
       <div class="row justify-content-end mb-3 mt-3">
         <div class="d-flex gap-2">
-          <button mat-raised-button color="primary" class="Add-button" (click)="changeSettingName()">Cambiar nombre</button>
-          <button mat-raised-button color="primary" class="Add-button" (click)="createSetting()">Nueva Configuración</button>
-          <button mat-raised-button color="warn" class="Add-button" *ngIf="indicatorsAvailable.length > 1" (click)="deleteSetting()">Eliminar configuración</button>
+          <button mat-raised-button color="primary" (click)="changeSettingName()">Cambiar nombre</button>
+          <button mat-raised-button color="primary" (click)="createSetting()">Nueva Configuración</button>
+          <button mat-raised-button color="warn" *ngIf="indicatorsAvailable.length > 1" (click)="deleteSetting()">Eliminar configuración</button>
         </div>
       </div>
     </div>

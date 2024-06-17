@@ -6,6 +6,7 @@ import { SheetModalComponent } from '../sheet-modal/sheet-modal.component';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {INews, ISavedNews, ISheet} from "../../interfaces/news.interface";
 import {IPrompts} from "../../interfaces/indicators.interface";
+import {ReadNewComponent} from "../read-new/read-new.component";
 @Component({
   selector: 'app-saved-news-search-component',
   templateUrl: './saved-news-search-component.component.html',
@@ -47,20 +48,19 @@ export class SavedNewsSearchComponentComponent {
     return this.advFilters.get('inputs') as FormArray;
   }
   ngOnInit() {
-    this.gemmaService.getAllNews().subscribe((items) => {
-      (this.news = items)
-    });
     this.advFilters = this.fb.group({
       inputs: this.fb.array( this.indicators.map(() => this.fb.control(''))),
       searchControl: [''],
       dateStart: [''],
       dateEnd: [''],
     });
-    this.gemmaService.getAllNews().subscribe(items => this.news = (items))
-    this.gemmaService.getIndicators().subscribe(items => {
-      this.indicators = (items)
-      console.log(this.indicators)
-      this.advFilters.setControl("inputs", this.fb.array( this.indicators.map(() => this.fb.control(''))))
+    this.gemmaService.getAllNews().subscribe(items => {
+      this.news = (items)
+      this.gemmaService.getIndicators().subscribe(items => {
+        this.indicators = (items)
+        console.log(this.indicators)
+        this.advFilters.setControl("inputs", this.fb.array( this.indicators.map(() => this.fb.control(''))))
+      })
     })
   }
 
@@ -99,6 +99,19 @@ export class SavedNewsSearchComponentComponent {
     newSaved: ISavedNews
   ) {
     this.dialog.open(SheetModalComponent, {
+      data: { newSaved },
+      width: '60vw',
+      height: '60vh',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+  openDialogReadNew(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    newSaved: ISavedNews
+  ) {
+    this.dialog.open(ReadNewComponent, {
       data: { newSaved },
       width: '60vw',
       height: '60vh',
