@@ -23,11 +23,7 @@ export class GemmaService {
     /*
   currentMessage$ =
   );*/
-    const messages = ['Buscando noticias...', 'Extrayendo noticias...', "Guardando noticias..."];
-    const value = interval(3000).pipe(
-      map(i => messages[i % messages.length]))
-    value.subscribe(val => this.loaderService.setMessage(val))
-
+    this.loaderService.setMessage("Buscando noticias...")
     const params = new HttpParams()
       .set('search', search)
       .set('date_start', formatDate(date_start))
