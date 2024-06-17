@@ -7,7 +7,7 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
-import { BannerComponent } from './components/Banner/banner.component';
+import { BannerComponent } from './components/banner/banner.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -64,6 +64,9 @@ import { IndicatorsComponent } from './components/indicators/indicators.componen
 import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
 import { CreateIndicatorModalComponent } from './components/create-indicator-modal/create-indicator-modal.component';
 import { ReadNewComponent } from './components/read-new/read-new.component';
+import { InstructionsComponent } from './components/instructions/instructions.component';
+import {PdfViewerModule} from "ng2-pdf-viewer";
+import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 
 
 
@@ -83,6 +86,14 @@ const routes: Routes = [
   {
     path: 'indicadores',
     component: IndicatorsComponent,
+  },
+  {
+    path: 'acerca-de',
+    component: BannerComponent,
+  },
+  {
+    path: 'instrucciones',
+    component: InstructionsComponent,
   }
 ];
 
@@ -99,7 +110,8 @@ const routes: Routes = [
     IndicatorsComponent,
     IndicatorModalComponent,
     CreateIndicatorModalComponent,
-    ReadNewComponent
+    ReadNewComponent,
+    InstructionsComponent
   ],
   imports: [
     BrowserModule,
@@ -142,6 +154,7 @@ const routes: Routes = [
     MatDialogActions,
     MatDialogContent,
     MatDialogTitle,
+    NgxExtendedPdfViewerModule,
   ],
   providers: [
     provideClientHydration(),
