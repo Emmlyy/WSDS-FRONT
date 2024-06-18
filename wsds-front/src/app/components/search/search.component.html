@@ -31,9 +31,11 @@
         </mat-form-field>
 
         <mat-form-field class="w-32" appearance="outline">
-          <mat-label>Indicadores aplicables</mat-label>
+          <mat-label>Numero de resultados</mat-label>
           <mat-select [(value)]="indicatorsSet">
-            <mat-option value="id1">Derecho a la vida</mat-option>
+            <ng-container *ngFor="let i of arraySearchOptions">
+              <mat-option [value]=i>{{ i }}</mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="w-32" appearance="outline">
@@ -149,6 +151,11 @@
         <p class="text-center">Generando ficha..</p>
       </mat-card>
     </div>
+  </div>
+  <div class="pagination w-100 d-flex justify-content-center pb-4">
+    <ng-container *ngFor="let i of arrayPaginator">
+      <a (click)="requestNewPaginationData(i)" [ngClass]="currentPage === i ? 'pagination__active':''">{{ i }}</a>
+    </ng-container>
   </div>
 </main>
 

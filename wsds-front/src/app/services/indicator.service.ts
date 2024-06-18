@@ -51,10 +51,6 @@ export class IndicatorService {
     return this.http.put<{ message: string }>(urlWithQuery, {});
   }
   downloadReport(): Observable<Blob> {
-    const messages = ['Buscando noticias...', "Consultando datos de archivo...", ' Generando reporte...'];
-    const value = interval(3000).pipe(
-      map(i => messages[i % messages.length]))
-    value.subscribe(val => this.loaderService.setMessage(val))
     this.loaderService.setMessage("Generando reporte...")
     const urlWithQuery = `${this.apiUrl}/report/`;
     return this.http.get(urlWithQuery, {

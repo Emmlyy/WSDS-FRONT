@@ -19,20 +19,16 @@ export class GemmaService {
   //http://localhost:3000
   constructor(private http: HttpClient, private loaderService: LoaderService) {}
 
-  searchData(search: string, date_start: string, date_end: string, performance: string): Observable<any> {
+  searchData(search: string, date_start: string, date_end: string, performance: string,number_search: number, start_from: number): Observable<any> {
     /*
   currentMessage$ =
   );*/
-    const messages = ['Buscando noticias...', 'Extrayendo noticias...', "Guardando noticias..."];
-    const value = interval(3000).pipe(
-      map(i => messages[i % messages.length]))
-    value.subscribe(val => this.loaderService.setMessage(val))
-
+    this.loaderService.setMessage("Buscando noticias...")
     const params = new HttpParams()
       .set('search', search)
       .set('date_start', formatDate(date_start))
       .set('date_end', formatDate(date_end))
-      .set('gemma_mode', performance);
+      .set('gemma_mode', performance).set('start_from', start_from).set('number_search', number_search);
 
     const urlWithQuery = `${this.apiUrl}/model_gemma`;
     return this.http.get(urlWithQuery, {
@@ -85,6 +81,15 @@ export class GemmaService {
   }
   generateSheet(new_ : INews): Observable<{ indicator_name: string, response: string }[]> {
     return this.http.post<{ indicator_name: string, response: string }[]>(`${this.apiUrl}/generate_sheet/`, new_);
+  }
+
+  getTotalResults(search: string, date_start: string, date_end: string, performance: string, number_search: number, start_from: number): Observable<number> {
+    const params = new HttpParams()
+      .set('search', search)
+      .set('date_start', formatDate(date_start))
+      .set('date_end', formatDate(date_end))
+      .set('gemma_mode', performance).set('start_from', start_from).set('number_search', number_search);
+    return this.http.get<number>(`${this.apiUrl}/total_results/`, {params});
   }
 }
 
