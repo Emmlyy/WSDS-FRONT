@@ -26,9 +26,12 @@ export class SearchComponent implements OnInit {
   results: any[] = [];
   date_start: string = "";
   date_end: string = "";
-  indicatorsSet: string = "id1";
+  indicatorsSet: number = 10;
   options: string[] = ['Homicidio', 'Feminicidio', 'Asesinato'];
-
+  totalResults = 0;
+  totalPages = 0
+  arrayPaginator:number[] = []
+  arraySearchOptions: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
   filteredOptions: Observable<string[]> | undefined;
   filteredOptionsDepartments: Observable<string[]> | undefined;
   filteredOptionsTowns: Observable<string[]> | undefined;
@@ -52,6 +55,7 @@ export class SearchComponent implements OnInit {
     ['diarioelsalvador.com', './../../assets/elsalvador.png'],
   ]);
   news!: ISavedNews[];
+  currentPage: number = 1;
 
   constructor(
     private gemmaService: GemmaService,
@@ -61,20 +65,24 @@ export class SearchComponent implements OnInit {
 
 
   ngOnInit() {
-    //this.news = this.moked
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || ''))
     );
 
   }
-  onSearch(): void {
+  onSearch(start_from = 0): void {
     if (this.searchControl.value) {
       let current_text = '';
-      this.gemmaService.searchData(this.searchControl.value, this.date_start, this.date_end, this.highPerformance).subscribe(
+      this.gemmaService.searchData(this.searchControl.value, this.date_start, this.date_end, this.highPerformance,this.indicatorsSet, start_from).subscribe(
         (event) => {
           if (event.type === HttpEventType.Response) {
             this.loaderInServices = false;
+            this.gemmaService.getTotalResults(String(this.searchControl.value), this.date_start, this.date_end, this.highPerformance,this.indicatorsSet, start_from).subscribe(total => {
+              this.totalResults = Math.min(total, 90)
+              this.totalPages = Math.ceil(this.totalResults / 10)
+              this.arrayPaginator = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+            })
           } else if (event.type === HttpEventType.DownloadProgress) {
             if (
               event.partialText.includes('data: True') &&
@@ -99,6 +107,7 @@ export class SearchComponent implements OnInit {
     } else {
       this.results = [];
     }
+
   }
 
   private _filter(value: string): string[] {
@@ -138,6 +147,11 @@ export class SearchComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
     });
+  }
+
+  requestNewPaginationData(i: number) {
+    this.currentPage = i;
+    this.onSearch((i-1)*this.indicatorsSet)
   }
 }
 
