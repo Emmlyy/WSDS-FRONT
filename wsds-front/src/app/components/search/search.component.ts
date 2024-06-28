@@ -10,6 +10,7 @@ import { HttpEventType } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
 import {ISavedNews} from "../../interfaces/news.interface";
 import {SheetModalComponent} from "../sheet-modal/sheet-modal.component";
+import {ReadNewComponent} from "../read-new/read-new.component";
 interface OnInit {}
 
 @Component({
@@ -140,7 +141,7 @@ export class SearchComponent implements OnInit {
     exitAnimationDuration: string,
     newSaved: ISavedNews
   ) {
-    this.dialog.open(SheetModalComponent, {
+    this.dialog.open(ReadNewComponent, {
       data: { newSaved },
       width: '60vw',
       height: '60vh',
