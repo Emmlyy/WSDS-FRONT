@@ -84,7 +84,7 @@
           <mat-card-subtitle>Etiqueta: {{ new.tag }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p class="m-0">{{ new.text.substring(0, 100) }}...</p>
+          <p class="m-0">{{ new.text.substring(0, 100).length !=0 ? new.text.substring(0, 100) : "Noticia no encontrada, revisar manualmente" }}...</p>
           <span *ngIf="new.sheet !== null" [ngSwitch]="new.sheet.priority">
             <img
               *ngSwitchCase="3"
